@@ -1,16 +1,19 @@
 package com.example.restaurant_pandan_wangi.model;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class Menu {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
     private int price;
     private boolean category;       // Kategori menu, true untuk makanan, false untuk minuman
-    private boolean isActive;       // Status menu tersedia
+    private boolean isActive = true;       // Status menu tersedia
 
     public Menu() {
         // Do Nothing

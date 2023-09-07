@@ -28,18 +28,13 @@ public class EmployeeService {
 
     // Method tambah pegawai
     public boolean create(Employee employeeRequest){
-        if (employeeRequest.getName() == null || employeeRequest.getPhoneNumber() == null){
-            message = "Data must be filled in";
-            return false;
-        } else if (isNameNotValid(employeeRequest.getName())) {
-            message = "Name is not valid";
-            return false;
-        }else if(isPhoneNumberNotValid(employeeRequest.getPhoneNumber())){
-            message = "Phone number is not valid";
+        if (isNameNotValid(employeeRequest.getName()) || isPhoneNumberNotValid(employeeRequest.getPhoneNumber())){
+            message = "Input Invalid";
             return false;
         }
+
         employeeRepository.save(employeeRequest);
-        message = "Employee added successfully";
+        message = "Success";
         return true;
     }
 
@@ -57,25 +52,12 @@ public class EmployeeService {
 
     public boolean update(Long id, Employee employeeRequest){
         Optional<Employee> existingEmployee = employeeRepository.findById(id);
-        List<Employee> existingPhoneNumber = employeeRepository.findFirstByPhoneNumber(employeeRequest.getPhoneNumber());
 
-        if (!existingEmployee.isPresent()){
-            message = "Employee not found";
-            return false;
-        }else if (employeeRequest.getName() == null || employeeRequest.getPhoneNumber() == null){
-            message = "Data must be filled in";
-            return false;
-        } else if (isNameNotValid(employeeRequest.getName())) {
-            message = "Name is not valid";
-            return false;
-        }else if(isPhoneNumberNotValid(employeeRequest.getPhoneNumber())){
-            message = "Phone number is not valid";
-            return false;
-        } else if (existingPhoneNumber.size()>=1) {
-            message = "Phone Number already exists";
+        if (!existingEmployee.isPresent() || isNameNotValid(employeeRequest.getName())
+        || isPhoneNumberNotValid(employeeRequest.getPhoneNumber())){
+            message = "Input Invalid ";
             return false;
         }
-
 
         existingEmployee.get().setName(employeeRequest.getName());
         existingEmployee.get().setPhoneNumber(employeeRequest.getPhoneNumber());
@@ -103,12 +85,12 @@ public class EmployeeService {
 
     // Validasi nama
     private boolean isNameNotValid(String name) {
-        return !name.matches("[a-zA-Z0-9\\s]+"); // Nama harus sesuai dengan format
+        return name == null || !name.matches("[a-zA-Z0-9\\s]+"); // Nama harus sesuai dengan format
     }
 
     // Validasi Phone Number
     private boolean isPhoneNumberNotValid(String phoneNumber){
         // Phone number harus berupa angka dan tidak boleh lebih dari 13 angka
-        return !phoneNumber.matches("^[0-9]{8,13}$");
+        return phoneNumber == null || !phoneNumber.matches("^[0-9]{8,13}$");
     }
 }

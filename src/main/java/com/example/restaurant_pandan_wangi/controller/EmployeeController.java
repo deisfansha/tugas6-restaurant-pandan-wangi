@@ -50,7 +50,7 @@ public class EmployeeController {
     public ResponseEntity updatedEmployee(@PathVariable Long id, @RequestBody Employee employeeRequest){
         boolean updated = employeeService.update(id,employeeRequest);
         if (updated){
-            return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse(employeeService.getMessage(), employeeRequest));
+            return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse(employeeService.getMessage(), employeeService.getCurrent()));
         }else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(employeeService.getMessage()));
         }
@@ -60,7 +60,7 @@ public class EmployeeController {
     public ResponseEntity updatedActiveEmployee(@PathVariable Long id, @RequestBody Employee employeeRequest){
         boolean updated = employeeService.updateActived(id,employeeRequest);
         if (updated){
-            return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse(employeeService.getMessage(), employeeRequest));
+            return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse(employeeService.getMessage(), employeeService.getCurrent()));
         }else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(employeeService.getMessage()));
         }

@@ -30,21 +30,30 @@ public class MenuController {
                 ));
     }
 
-    @GetMapping("/active-menu")
-    public ResponseEntity getAllMenuActived() {
+    @GetMapping("/actived/{isActive}")
+    public ResponseEntity getAllMenuByActive(@PathVariable boolean isActive) {
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ApiResponse(
-                        "All list Menu active.",
-                        menuService.getAllMenuActived()
+                        (isActive) ? "All list Menu active." : "All list Menu non-active.",
+                        menuService.getAllMenuByActive(isActive)
                 ));
     }
 
-    @GetMapping("/non-active-menu")
-    public ResponseEntity getAllMenuNonActived() {
+    @GetMapping("/named/{name}")
+    public ResponseEntity getAllMenuByName(@PathVariable String name) {
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ApiResponse(
-                        "All list Menu non-active.",
-                        menuService.getAllMenuNotActived()
+                        "All list Menu.",
+                        menuService.getAllMenuByName(name)
+                ));
+    }
+
+    @GetMapping("/category/{category}")
+    public ResponseEntity getAllMenuByCategory(@PathVariable boolean category) {
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ApiResponse(
+                        (category) ? "All list Menu by Food." : "All list Menu by Drink.",
+                        menuService.getAllMenuByCategory(category)
                 ));
     }
 

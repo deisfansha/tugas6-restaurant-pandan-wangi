@@ -30,7 +30,7 @@ public class Menu {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = name.trim();
     }
 
     public int getPrice() {

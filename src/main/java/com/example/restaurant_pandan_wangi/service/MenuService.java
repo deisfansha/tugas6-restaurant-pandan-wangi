@@ -80,12 +80,16 @@ public class MenuService {
         return menuRepository.findAllMenu();
     }
 
-    public List<Menu> getAllMenuActived() {
-        return menuRepository.findAllActived();
+    public List<Menu> getAllMenuByActive(boolean isActive) {
+        return menuRepository.findMenuByActive(isActive);
     }
 
-    public List<Menu> getAllMenuNotActived() {
-        return menuRepository.findAllNotActived();
+    public List<Menu> getAllMenuByName(String name) {
+        return menuRepository.findMenuByName(name);
+    }
+
+    public List<Menu> getAllMenuByCategory(boolean category) {
+        return menuRepository.findMenuByCategory(category);
     }
 
     public Menu getMenuById(long id) {

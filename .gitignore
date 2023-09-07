@@ -3,7 +3,7 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-**/src/main/resources/deis.properties
+**/src/main/resources/app-alfaro.properties
 **/src/main/java/com/example/restaurant_pandan_wangi/Main.java
 
 ### STS ###

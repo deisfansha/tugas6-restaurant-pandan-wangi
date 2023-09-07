@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.example.restaurant_pandan_wangi.repository.EmployeeRepository;
 
+import java.util.List;
+
 @Service
 public class EmployeeService {
     @Autowired
@@ -36,6 +38,10 @@ public class EmployeeService {
         employeeRepository.save(employeeRequest);
         message = "Employee added successfully";
         return true;
+    }
+
+    public List<Employee> getAll(){
+        return employeeRepository.findAllNotDeleted();
     }
 
     // Validasi nama

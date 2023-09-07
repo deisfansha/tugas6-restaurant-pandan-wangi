@@ -27,4 +27,9 @@ public class EmployeeController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(employeeService.getMessage()));
         }
     }
+
+    @GetMapping("")
+    public ResponseEntity getAllEmployee(){
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Success", employeeService.getAll()));
+    }
 }

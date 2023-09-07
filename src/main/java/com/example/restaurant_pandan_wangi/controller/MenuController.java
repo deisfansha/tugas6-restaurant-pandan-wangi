@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -69,4 +71,35 @@ public class MenuController {
         }
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity updateCourse(@PathVariable long id, @RequestBody Menu menuRequest) {
+        if (menuService.updateData(id,menuRequest)) {
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(new ApiResponse(
+                            menuService.getMessage(),
+                            menuService.getCurrent()
+                    ));
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new ApiResponse(
+                            menuService.getMessage()
+                    ));
+        }
+    }
+
+    @PatchMapping("/{id}/activated")
+    public ResponseEntity updateActivated(@PathVariable long id, @RequestBody Menu menuRequest) {
+        if (menuService.updateStatus(id,menuRequest)) {
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(new ApiResponse(
+                            menuService.getMessage(),
+                            menuService.getCurrent()
+                    ));
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new ApiResponse(
+                            menuService.getMessage()
+                    ));
+        }
+    }
 }

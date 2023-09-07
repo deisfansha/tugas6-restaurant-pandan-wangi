@@ -35,8 +35,49 @@ public class MenuService {
         }
     }
 
+    public boolean updateData(long id, Menu menuRequest) {
+        Optional<Menu> menuOptional = menuRepository.findById(id);
+
+        if (!menuOptional.isPresent()) {
+            message = "Menu ID Not Found.";
+            return false;
+        } else if (menuRequest.getName() == null ||
+                !isNameValid(menuRequest.getName()) ||
+                menuRequest.getPrice() <= 0) {
+            message = "Input invalid.";
+            return false;
+        } else {
+            menuOptional.get().setName(menuRequest.getName());
+            menuOptional.get().setPrice(menuRequest.getPrice());
+            menuOptional.get().setCategory(menuRequest.isCategory());
+            menuRepository.save(menuOptional.get());
+            message = "Menu with ID `" + id + "` updated successfully.";
+            current = menuOptional.get();
+            return true;
+        }
+    }
+
+    public boolean updateStatus(long id, Menu menuRequest) {
+        Optional<Menu> menuOptional = menuRepository.findById(id);
+
+        if (!menuOptional.isPresent()) {
+            message = "Menu ID Not Found.";
+            return false;
+        } else {
+            menuOptional.get().setActive(menuRequest.isActive());
+            menuRepository.save(menuOptional.get());
+            if (menuRequest.isActive()) {
+                message = "Menu ID `" + id + "` is now active.";
+            } else {
+                message = "Menu ID `" + id + "` is now inactive.";
+            }
+            current = menuOptional.get();
+            return true;
+        }
+    }
+
     public List<Menu> getAllMenu() {
-        return menuRepository.findAll();
+        return menuRepository.findAllMenu();
     }
 
     public List<Menu> getAllMenuActived() {

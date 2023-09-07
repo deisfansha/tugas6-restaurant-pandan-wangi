@@ -1,5 +1,7 @@
 package com.example.restaurant_pandan_wangi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -37,6 +39,10 @@ public class Menu {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public boolean isCategory() {
+        return category;
     }
 
     public String getCategory() {

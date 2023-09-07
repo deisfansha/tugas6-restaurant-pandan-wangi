@@ -11,4 +11,6 @@ import java.util.List;
 public interface MenuRepository extends JpaRepository<Menu, Long> {
     @Query("SELECT m FROM Menu m WHERE m.isActive = true ORDER BY m.id")
     List<Menu> findAllActived();
+    @Query("SELECT m FROM Menu m ORDER BY m.id")
+    List<Menu> findAllMenu();
 }

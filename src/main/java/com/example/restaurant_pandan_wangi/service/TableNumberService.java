@@ -29,12 +29,51 @@ public class TableNumberService {
         tableNumberRepository.save(current);
     }
 
+    public boolean updateInUse(long id, boolean isUsed) {
+        Optional<TableNumber> tableNumberOptional = tableNumberRepository.findById(id);
+
+        if (!tableNumberOptional.isPresent()) {
+            message = "Table ID Not Found.";
+            return false;
+        } else {
+            tableNumberOptional.get().setTableInUse(isUsed);
+            tableNumberRepository.save(tableNumberOptional.get());
+            if (isUsed) {
+                message = "Table ID `" + id + "` is currently being used.";
+            } else {
+                message = "Table ID `" + id + "` is available.";
+            }
+            current = tableNumberOptional.get();
+            return true;
+        }
+    }
+
+    public boolean updateStatus(long id, boolean isActive) {
+        Optional<TableNumber> tableNumberOptional = tableNumberRepository.findById(id);
+
+        if (!tableNumberOptional.isPresent()) {
+            message = "Table ID Not Found.";
+            return false;
+        } else {
+            tableNumberOptional.get().setActive(isActive);
+            if (isActive) {
+                message = "Table ID `" + id + "` is now active.";
+            } else {
+                message = "Table ID `" + id + "` is now inactive.";
+                tableNumberOptional.get().setTableInUse(false);
+            }
+            tableNumberRepository.save(tableNumberOptional.get());
+            current = tableNumberOptional.get();
+            return true;
+        }
+    }
+
     public List<TableNumber> getAllTable() {
         return tableNumberRepository.findAllTable();
     }
 
-    public List<TableNumber> getAllTableByInUse(boolean isUse) {
-        return tableNumberRepository.findAllTableByInUse(isUse);
+    public List<TableNumber> getAllTableByInUse(boolean isUsed) {
+        return tableNumberRepository.findAllTableByInUse(isUsed);
     }
 
     public List<TableNumber> getAllTableByActive(boolean isActive) {

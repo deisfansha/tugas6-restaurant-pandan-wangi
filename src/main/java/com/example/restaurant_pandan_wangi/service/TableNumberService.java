@@ -11,7 +11,7 @@ import java.util.Optional;
 @Service
 public class TableNumberService {
     @Autowired
-    TableNumberRepository tableNumberRepository;
+    private TableNumberRepository tableNumberRepository;
     private TableNumber current;
     private String message;
 

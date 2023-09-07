@@ -1,7 +1,6 @@
 package com.example.restaurant_pandan_wangi.controller;
 
 import com.example.restaurant_pandan_wangi.model.ApiResponse;
-import com.example.restaurant_pandan_wangi.model.Menu;
 import com.example.restaurant_pandan_wangi.model.TableNumber;
 import com.example.restaurant_pandan_wangi.service.TableNumberService;
 import org.springframework.beans.factory.annotation.Autowired;

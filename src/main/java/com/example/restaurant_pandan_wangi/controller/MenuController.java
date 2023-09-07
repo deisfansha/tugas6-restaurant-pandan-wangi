@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/menu")
 public class MenuController {
     @Autowired
-    MenuService menuService;
+    private MenuService menuService;
 
     @GetMapping("")
     public ResponseEntity getAllMenu() {
@@ -74,7 +74,7 @@ public class MenuController {
     }
 
     @PostMapping("")
-    public ResponseEntity addCourse(@RequestBody Menu menuRequest) {
+    public ResponseEntity addMenu(@RequestBody Menu menuRequest) {
         if (menuService.add(menuRequest)) {
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body(new ApiResponse(
@@ -90,7 +90,7 @@ public class MenuController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity updateCourse(@PathVariable long id, @RequestBody Menu menuRequest) {
+    public ResponseEntity updateDate(@PathVariable long id, @RequestBody Menu menuRequest) {
         if (menuService.updateData(id,menuRequest)) {
             return ResponseEntity.status(HttpStatus.OK)
                     .body(new ApiResponse(

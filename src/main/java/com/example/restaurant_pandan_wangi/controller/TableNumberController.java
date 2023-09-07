@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/tables")
 public class TableNumberController {
     @Autowired
-    TableNumberService tableNumberService;
+    private TableNumberService tableNumberService;
 
     @GetMapping("")
     public ResponseEntity getAllTable() {
@@ -48,7 +48,7 @@ public class TableNumberController {
     }
 
     @PostMapping("")
-    public ResponseEntity addCourse() {
+    public ResponseEntity addTable() {
         tableNumberService.add();
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(new ApiResponse(

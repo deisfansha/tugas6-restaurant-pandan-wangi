@@ -64,6 +64,9 @@ public class Employee {
     public boolean isActive() {
         return isActive;
     }
+    public boolean isPosition() {
+        return position;
+    }
 
     public void setActive(boolean active) {
         isActive = active;

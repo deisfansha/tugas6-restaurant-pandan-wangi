@@ -39,6 +39,15 @@ public class MenuController {
                 ));
     }
 
+    @GetMapping("/non-active-menu")
+    public ResponseEntity getAllMenuNonActived() {
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ApiResponse(
+                        "All list Menu non-active.",
+                        menuService.getAllMenuNotActived()
+                ));
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity getMenuById(@PathVariable long id) {
         if (menuService.getMenuById(id) != null) {

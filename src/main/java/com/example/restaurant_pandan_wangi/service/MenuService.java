@@ -84,6 +84,10 @@ public class MenuService {
         return menuRepository.findAllActived();
     }
 
+    public List<Menu> getAllMenuNotActived() {
+        return menuRepository.findAllNotActived();
+    }
+
     public Menu getMenuById(long id) {
         Optional<Menu> menuOptional = menuRepository.findById(id);
 

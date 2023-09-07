@@ -1,4 +1,4 @@
-package models;
+package com.example.restaurant_pandan_wangi.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -38,7 +38,7 @@ public class Employee {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = name.trim();
     }
 
     public String getPhoneNumber() {
@@ -46,11 +46,15 @@ public class Employee {
     }
 
     public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+        this.phoneNumber = phoneNumber.trim();
     }
 
-    public boolean isPosition() {
-        return position;
+    public String getPosition() {
+        if(position){
+            return "Staff";
+        }else {
+            return "Koki";
+        }
     }
 
     public void setPosition(boolean position) {
@@ -65,8 +69,4 @@ public class Employee {
         isActive = active;
     }
 
-    @JsonIgnore
-    public boolean isExists(){
-        return !isActive;
-    }
 }

@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class RestaurantPandanWangiApplication {
 
 	public static void main(String[] args) {
-		System.setProperty("spring.config.name", "{name propertires}");
 		SpringApplication.run(RestaurantPandanWangiApplication.class, args);
 	}
 

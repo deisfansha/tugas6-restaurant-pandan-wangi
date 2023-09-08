@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +24,16 @@ public class OrderController {
         boolean added = orderService.createOrder(orderRequest);
         if (added){
             return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse(orderService.getMessage(), orderRequest));
+        }else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(orderService.getMessage()));
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity deleteOrder(@PathVariable long id){
+        boolean deleted = orderService.deleteOrder(id);
+        if (deleted){
+            return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse(orderService.getMessage(), orderService.getCurrent()));
         }else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(orderService.getMessage()));
         }

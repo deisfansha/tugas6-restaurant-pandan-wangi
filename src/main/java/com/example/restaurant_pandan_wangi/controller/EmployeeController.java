@@ -36,12 +36,21 @@ public class EmployeeController {
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Success", employeeService.getAll()));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity getEmployeeById(@PathVariable Long id){
+        if (employeeService.getById(id) == null){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(employeeService.getMessage()));
+        }else {
+            return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Success", employeeService.getById(id)));
+        }
+    }
+
     @GetMapping("/actived")
     public ResponseEntity getAllActivedEmployee(){
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Success", employeeService.getAllByIsActive()));
     }
 
-    @GetMapping("/{position}")
+    @GetMapping("/position/{position}")
     public ResponseEntity getAllPositionEmployee(@PathVariable boolean position){
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Success", employeeService.getAllByPosition(position)));
     }

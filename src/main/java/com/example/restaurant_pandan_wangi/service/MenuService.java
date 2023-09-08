@@ -11,7 +11,7 @@ import java.util.Optional;
 @Service
 public class MenuService {
     @Autowired
-    MenuRepository menuRepository;
+    private MenuRepository menuRepository;
     private Menu current;   // Untuk mengambil data terbaru saat transaksi
     private String message;
 

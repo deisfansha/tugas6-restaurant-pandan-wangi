@@ -7,7 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.util.List;
 
 @Entity
 @Table(name = "employee")
@@ -21,6 +23,10 @@ public class Employee {
     private boolean position = true;
     @Column(name = "actived")
     private boolean isActive = true;
+
+    @OneToMany(mappedBy = "employee")
+    @JsonIgnore
+    private List<Order> orderList;
 
     public Employee() {
     }
@@ -72,4 +78,7 @@ public class Employee {
         isActive = active;
     }
 
+    public List<Order> getOrderList() {
+        return orderList;
+    }
 }

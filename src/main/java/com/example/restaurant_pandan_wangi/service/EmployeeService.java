@@ -1,11 +1,9 @@
 package com.example.restaurant_pandan_wangi.service;
 
 import com.example.restaurant_pandan_wangi.model.Employee;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.example.restaurant_pandan_wangi.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.example.restaurant_pandan_wangi.repository.EmployeeRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -42,6 +40,15 @@ public class EmployeeService {
         return employeeRepository.findAllNotDeleted();
     }
 
+    public List<Employee> getById(Long id){
+        Optional<Employee> existingEmployee = employeeRepository.findById(id);
+        if (!existingEmployee.isPresent()){
+            message = "Employee not found";
+            return null;
+        }
+        return employeeRepository.findAllById(id);
+    }
+
     public List<Employee> getAll(){
         return employeeRepository.findAllSorting();
     }
@@ -51,9 +58,14 @@ public class EmployeeService {
     }
 
     public boolean update(Long id, Employee employeeRequest){
-        Optional<Employee> existingEmployee = employeeRepository.findById(id);
 
-        if (!existingEmployee.isPresent() || isNameNotValid(employeeRequest.getName())
+        Optional<Employee> existingEmployee = employeeRepository.findById(id);
+        if (!existingEmployee.isPresent()){
+            message= "Employee Not Found";
+            return false;
+        }
+
+        if (isNameNotValid(employeeRequest.getName())
         || isPhoneNumberNotValid(employeeRequest.getPhoneNumber())){
             message = "Input Invalid ";
             return false;

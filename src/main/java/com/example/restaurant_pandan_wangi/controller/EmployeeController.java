@@ -2,6 +2,7 @@ package com.example.restaurant_pandan_wangi.controller;
 
 import com.example.restaurant_pandan_wangi.model.ApiResponse;
 import com.example.restaurant_pandan_wangi.model.Employee;
+import com.example.restaurant_pandan_wangi.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.example.restaurant_pandan_wangi.service.EmployeeService;
 
 @RestController
 @RequestMapping("/employees")
@@ -36,12 +36,21 @@ public class EmployeeController {
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Success", employeeService.getAll()));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity getEmployeeById(@PathVariable Long id){
+        if (employeeService.getById(id) == null){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(employeeService.getMessage()));
+        }else {
+            return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Success", employeeService.getById(id)));
+        }
+    }
+
     @GetMapping("/actived")
     public ResponseEntity getAllActivedEmployee(){
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Success", employeeService.getAllByIsActive()));
     }
 
-    @GetMapping("/{position}")
+    @GetMapping("/position/{position}")
     public ResponseEntity getAllPositionEmployee(@PathVariable boolean position){
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Success", employeeService.getAllByPosition(position)));
     }

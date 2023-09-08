@@ -1,7 +1,6 @@
 package com.example.restaurant_pandan_wangi.controller;
 
 import com.example.restaurant_pandan_wangi.model.ApiResponse;
-import com.example.restaurant_pandan_wangi.model.Menu;
 import com.example.restaurant_pandan_wangi.model.TableNumber;
 import com.example.restaurant_pandan_wangi.service.TableNumberService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/tables")
 public class TableNumberController {
     @Autowired
-    TableNumberService tableNumberService;
+    private TableNumberService tableNumberService;
 
     @GetMapping("")
     public ResponseEntity getAllTable() {
@@ -48,8 +47,25 @@ public class TableNumberController {
                 ));
     }
 
+    @GetMapping("{id}")
+    public ResponseEntity getAllTableById(@PathVariable long id) {
+        if (tableNumberService.getTableById(id) != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new ApiResponse(
+                            tableNumberService.getMessage(),
+                            tableNumberService.getTableById(id)
+                    ));
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                    new ApiResponse(
+                            tableNumberService.getMessage()
+                    ));
+        }
+
+    }
+
     @PostMapping("")
-    public ResponseEntity addCourse() {
+    public ResponseEntity addTable() {
         tableNumberService.add();
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(new ApiResponse(

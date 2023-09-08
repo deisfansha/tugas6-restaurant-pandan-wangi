@@ -27,15 +27,17 @@ public class OrderService {
     private CustomerRepository customerRepository;
     @Autowired
     private TableNumberRepository tableNumberRepository;
+    @Autowired
+    private DetailOrderService detailOrderService;
 
-    private Employee current;
+    private Order current;
     private String message;
 
     public String getMessage(){
         return message;
     }
 
-    public Employee getCurrent(){
+    public Order getCurrent(){
         return current;
     }
 
@@ -65,6 +67,20 @@ public class OrderService {
         orderRepository.save(orderRequest);
         tableNumberRepository.save(tableNotUse.get());
         message = "Success";
+        return true;
+    }
+
+    public boolean deleteOrder(long orderId){
+        Optional<Order> existingOrder = orderRepository.findById(orderId);
+        if (!existingOrder.isPresent()){
+            message = "Order not found";
+            return false;
+        }
+
+//        detailOrderService.deleteByIdOrder(orderId);
+        orderRepository.deleteById(orderId);
+        message = "Success";
+        current = existingOrder.get();
         return true;
     }
 }

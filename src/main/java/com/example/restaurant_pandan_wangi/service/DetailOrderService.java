@@ -68,7 +68,7 @@ public class DetailOrderService {
             detailOrderRequest.setMenu(menuOptional.get());
             detailOrderRequest.setPrice(menuOptional.get().getPrice());
             detailOrderRepository.save(detailOrderRequest);
-//            detailOrderRequest.setOrder(orderOptional.get());
+            detailOrderRequest.setOrder(orderOptional.get());
             message = "Menu added successfully.";
             return true;
         }

@@ -69,13 +69,13 @@ public class DetailOrder {
             case 0 :
                 return "Pending";
             case 1 :
-                return "Dimasak";
+                return "Cooking";
             case 2 :
-                return "Diantarkan";
+                return "Deliver";
             case 3 :
-                return "Disajikan";
+                return "Done";
             default:
-                return "Status tidak ditemukan";
+                return "Status not found";
         }
     }
 

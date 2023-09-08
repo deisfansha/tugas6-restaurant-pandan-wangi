@@ -69,7 +69,6 @@ public class Order {
         return tableNumber;
     }
 
-    @JsonIgnore
     public TableNumber getTableNumber() {
         return tableNumber;
     }

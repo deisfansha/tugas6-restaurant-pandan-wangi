@@ -45,6 +45,6 @@ public class Customer {
     }
 
     public void setMember(boolean is_member) {
-        this.isMember = isMember;
+        isMember = is_member;
     }
 }

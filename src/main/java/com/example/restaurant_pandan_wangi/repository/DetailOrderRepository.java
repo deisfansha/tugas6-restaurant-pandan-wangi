@@ -12,4 +12,6 @@ import java.util.List;
 public interface DetailOrderRepository extends JpaRepository<DetailOrder, Long> {
     @Query("SELECT do FROM DetailOrder do ORDER BY do.id")
     List<DetailOrder> findAllDetailOrder();
+    @Query("SELECT do FROM DetailOrder do WHERE do.order = :idOrder ORDER BY do.id")
+    List<DetailOrder> findAllDetailOrderByIdOrder(long idOrder);
 }

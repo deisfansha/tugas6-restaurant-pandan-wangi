@@ -22,11 +22,20 @@ public class DetailOrderController {
     private DetailOrderService detailOrderService;
 
     @GetMapping("")
-    public ResponseEntity getAllMenu() {
+    public ResponseEntity getAllDetailOrder() {
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ApiResponse(
                         "All list Detail Order.",
                         detailOrderService.getAllDetailOrder()
+                ));
+    }
+
+    @GetMapping("/order/{id}")
+    public ResponseEntity getAllDetailOrderByIdOrder(@PathVariable long idOrder) {
+        return ResponseEntity.status(HttpStatus.OK).body(
+                new ApiResponse(
+                        "All list Detail Order.",
+                        detailOrderService.gettAllDetailOrderByIdOrder(idOrder)
                 ));
     }
 

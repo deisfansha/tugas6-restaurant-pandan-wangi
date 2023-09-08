@@ -14,9 +14,9 @@ public class DetailOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-//    @ManyToOne
-//    @JoinColumn(name = "id_order", referencedColumnName = "id")
-//    private Order order;
+    @ManyToOne
+    @JoinColumn(name = "id_order", referencedColumnName = "id")
+    private Order order;
     @ManyToOne
     @JoinColumn(name = "id_menu", referencedColumnName = "id")
     private Menu menu;
@@ -32,13 +32,13 @@ public class DetailOrder {
         return id;
     }
 
-//    public Order getOrder() {
-//        return order;
-//    }
-//
-//    public void setOrder(Order order) {
-//        this.order = order;
-//    }
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
+    }
 
     public Menu getMenu() {
         return menu;

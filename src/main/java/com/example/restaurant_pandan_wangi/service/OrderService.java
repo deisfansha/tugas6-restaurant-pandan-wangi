@@ -77,7 +77,7 @@ public class OrderService {
             return false;
         }
 
-//        detailOrderService.deleteByIdOrder(orderId);
+        detailOrderService.deleteByIdOrder(orderId);
         orderRepository.deleteById(orderId);
         message = "Success";
         current = existingOrder.get();

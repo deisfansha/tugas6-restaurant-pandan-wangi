@@ -11,7 +11,7 @@ import javax.persistence.Table;
 import java.sql.Date;
 
 @Entity
-@Table(name = "order")
+@Table(name = "orders")
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,6 +26,10 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "id_table", referencedColumnName = "id")
     private TableNumber tableNumber;
+
+    @ManyToOne
+    @JoinColumn(name = "id_customer", referencedColumnName = "id")
+    private Customer customer;
 
 
     public Order() {
@@ -62,5 +66,19 @@ public class Order {
 
     public void setTableNumber(TableNumber tableNumber) {
         this.tableNumber = tableNumber;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+    public String getTable(){
+        if (tableNumber == null){
+            return "Take Away";
+        }
+        return null;
     }
 }

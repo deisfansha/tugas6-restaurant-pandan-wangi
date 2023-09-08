@@ -20,22 +20,25 @@ public class Order {
     private Long id;
     @Column(name = "created_at")
     private Date createdAt;
-
     @ManyToOne
     @JoinColumn(name = "id_employee", referencedColumnName = "id")
     private Employee employee;
-
     @ManyToOne
     @JoinColumn(name = "id_table", referencedColumnName = "id")
     private TableNumber tableNumber;
-
     @ManyToOne
     @JoinColumn(name = "id_customer", referencedColumnName = "id")
     private Customer customer;
 
-
     public Order() {
+        // Do Nothing
+    }
 
+    public Order(Date createdAt, Employee employee, TableNumber tableNumber, Customer customer) {
+        this.createdAt = createdAt;
+        this.employee = employee;
+        this.tableNumber = tableNumber;
+        this.customer = customer;
     }
 
     public Long getId() {

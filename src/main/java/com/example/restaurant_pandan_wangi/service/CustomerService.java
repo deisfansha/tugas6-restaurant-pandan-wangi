@@ -90,6 +90,7 @@ public class CustomerService {
      * @return      Daftar Customer yang masih tersedia.
      */
     public List<Customer> customerList() {
+        if (customerRepository.count() == 0) seed();
         return customerRepository.findAll();
     }
 
@@ -119,5 +120,13 @@ public class CustomerService {
      */
     private boolean isNameValid(String name) {
         return name.matches("[a-zA-Z0-9\\s]+");
+    }
+
+    private void seed() {
+        customerRepository.save(new Customer("Alice", "085748293829", false));
+        customerRepository.save(new Customer("Bob", "0812938437", false));
+        customerRepository.save(new Customer("Carol", "08937389238", false));
+        customerRepository.save(new Customer("Frank", "082174839823", true));
+        customerRepository.save(new Customer("Grace", "0853849283", true));
     }
 }

@@ -23,12 +23,18 @@ public class Employee {
     private boolean position = true;
     @Column(name = "actived")
     private boolean isActive = true;
-
     @OneToMany(mappedBy = "employee")
     @JsonIgnore
     private List<Order> orderList;
 
     public Employee() {
+        // Do Nothing
+    }
+
+    public Employee(String name, String phoneNumber, boolean position) {
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+        this.position = position;
     }
 
     public Long getId() {
@@ -70,6 +76,7 @@ public class Employee {
     public boolean isActive() {
         return isActive;
     }
+
     public boolean isPosition() {
         return position;
     }

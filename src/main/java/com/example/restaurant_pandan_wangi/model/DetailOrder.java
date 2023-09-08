@@ -28,6 +28,13 @@ public class DetailOrder {
         // Do Nothing
     }
 
+    public DetailOrder(Order order, Menu menu, int price, int quantity) {
+        this.order = order;
+        this.menu = menu;
+        this.price = price;
+        this.quantity = quantity;
+    }
+
     public long getId() {
         return id;
     }
@@ -83,7 +90,6 @@ public class DetailOrder {
     public int getStatus() {
         return statusOrder;
     }
-
 
     public void setStatusOrder(int statusOrder) {
         this.statusOrder = statusOrder;

@@ -69,6 +69,7 @@ public class TableNumberService {
     }
 
     public List<TableNumber> getAllTable() {
+        if (tableNumberRepository.count() == 0) seed();
         return tableNumberRepository.findAllTable();
     }
 
@@ -90,5 +91,13 @@ public class TableNumberService {
             message = "Table ID Not Found.";
             return null;
         }
+    }
+
+    private void seed() {
+        tableNumberRepository.save(new TableNumber());
+        tableNumberRepository.save(new TableNumber());
+        tableNumberRepository.save(new TableNumber());
+        tableNumberRepository.save(new TableNumber());
+        tableNumberRepository.save(new TableNumber());
     }
 }

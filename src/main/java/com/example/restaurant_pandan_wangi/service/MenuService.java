@@ -77,6 +77,7 @@ public class MenuService {
     }
 
     public List<Menu> getAllMenu() {
+        if (menuRepository.count() == 0) seed();
         return menuRepository.findAllMenu();
     }
 
@@ -106,5 +107,13 @@ public class MenuService {
 
     private boolean isNameValid(String name) {
         return name.matches("[a-zA-Z0-9\\s]+");
+    }
+
+    private void seed() {
+        menuRepository.save(new Menu("Nasi Goreng", 15000, true));
+        menuRepository.save(new Menu("Mie Goreng", 12000, true));
+        menuRepository.save(new Menu("Ikan Goreng", 20000, true));
+        menuRepository.save(new Menu("Es Teh Manis", 5000, false));
+        menuRepository.save(new Menu("Es Jeruk", 8000, false));
     }
 }

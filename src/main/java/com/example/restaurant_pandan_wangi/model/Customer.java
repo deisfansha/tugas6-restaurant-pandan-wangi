@@ -20,6 +20,12 @@ public class Customer {
         // Do Nothing
     }
 
+    public Customer(String name, String phone_number, boolean isMember) {
+        this.name = name;
+        this.phone_number = phone_number;
+        this.isMember = isMember;
+    }
+
     public long getId() {
         return id;
     }
@@ -37,7 +43,7 @@ public class Customer {
     }
 
     public void setPhone(String phone_number) {
-        this.phone_number = phone_number;
+        this.phone_number = phone_number.trim();
     }
 
     public boolean isMember() {

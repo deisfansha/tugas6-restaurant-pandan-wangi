@@ -21,6 +21,12 @@ public class Menu {
         // Do Nothing
     }
 
+    public Menu(String name, int price, boolean category) {
+        this.name = name;
+        this.price = price;
+        this.category = category;
+    }
+
     public long getId() {
         return id;
     }

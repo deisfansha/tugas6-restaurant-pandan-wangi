@@ -12,7 +12,6 @@ import java.util.Optional;
 public class EmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
-
     private Employee current;
     private String message;
 
@@ -50,6 +49,7 @@ public class EmployeeService {
     }
 
     public List<Employee> getAll(){
+        if (employeeRepository.count() == 0) seed();
         return employeeRepository.findAllSorting();
     }
 
@@ -104,5 +104,13 @@ public class EmployeeService {
     private boolean isPhoneNumberNotValid(String phoneNumber){
         // Phone number harus berupa angka dan tidak boleh lebih dari 13 angka
         return phoneNumber == null || !phoneNumber.matches("^[0-9]{8,13}$");
+    }
+
+    private void seed() {
+        employeeRepository.save(new Employee("Jack", "08213748382", false));
+        employeeRepository.save(new Employee("Grace", "08938493829", false));
+        employeeRepository.save(new Employee("Noah", "08183947584", true));
+        employeeRepository.save(new Employee("Wiliam", "0868439384", true));
+        employeeRepository.save(new Employee("Victoria", "08183947382", true));
     }
 }

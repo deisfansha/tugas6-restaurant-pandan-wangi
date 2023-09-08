@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -49,25 +50,47 @@ public class OrderService {
 
         Optional<Employee> existingEmployee = employeeRepository.findById(orderRequest.getEmployee().getId());
         Optional<Customer> existingCustomer = customerRepository.findById(orderRequest.getCustomer().getId());
-        Optional<TableNumber> tableNotUse = tableNumberRepository.findById(orderRequest.getTableNumber().getId());
 
 
-        if (!existingEmployee.isPresent() || !existingCustomer.isPresent() || !tableNotUse.isPresent()|| tableNotUse.get().isTableInUse()){
+        if (!existingEmployee.isPresent() || !existingCustomer.isPresent()){
             message = "Invalid Data";
             return false;
         }
 
+        if (orderRequest.getTableNumber() != null){
+            Optional<TableNumber> tableNotUse = tableNumberRepository.findById(orderRequest.getTableNumber().getId());
+            if (tableNotUse.isPresent() && !tableNotUse.get().isTableInUse()){
+                tableNotUse.get().setTableInUse(true);
+                orderRequest.setTableNumber(tableNotUse.get());
+                tableNumberRepository.save(tableNotUse.get());
+            }else {
+                message = "Table not found";
+                return false;
+            }
+        }
+
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         String created = format.format(new Timestamp(System.currentTimeMillis()));
-        tableNotUse.get().setTableInUse(true);
-        orderRequest.setTableNumber(tableNotUse.get());
+
         orderRequest.setCustomer(existingCustomer.get());
         orderRequest.setEmployee(existingEmployee.get());
         orderRequest.setCreatedAt(Date.valueOf(created));
         orderRepository.save(orderRequest);
-        tableNumberRepository.save(tableNotUse.get());
         message = "Success";
         return true;
+    }
+
+    public List<Order> getAll(){
+        return orderRepository.findAll();
+    }
+
+    public List<Order> getById(Long id){
+        Optional<Order> existingOrder = orderRepository.findById(id);
+        if (!existingOrder.isPresent()){
+            message = "Order Not Found";
+            return null;
+        }
+        return orderRepository.findAllById(id);
     }
 
     public boolean deleteOrder(long orderId){

@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,6 +27,20 @@ public class OrderController {
             return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse(orderService.getMessage(), orderRequest));
         }else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(orderService.getMessage()));
+        }
+    }
+
+    @GetMapping("")
+    public ResponseEntity getAllPositionEmployee(){
+        return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Success", orderService.getAll()));
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity getAllById(@PathVariable Long id){
+        if (orderService.getById(id) == null){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(orderService.getMessage()));
+        }else {
+            return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Success", orderService.getById(id)));
         }
     }
 

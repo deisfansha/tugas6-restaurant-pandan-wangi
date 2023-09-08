@@ -1,5 +1,7 @@
 package com.example.restaurant_pandan_wangi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -60,6 +62,14 @@ public class Order {
         this.employee = employee;
     }
 
+    public Object getTable(){
+        if (tableNumber == null){
+            return "Take Away";
+        }
+        return tableNumber;
+    }
+
+    @JsonIgnore
     public TableNumber getTableNumber() {
         return tableNumber;
     }
@@ -75,10 +85,7 @@ public class Order {
     public void setCustomer(Customer customer) {
         this.customer = customer;
     }
-    public String getTable(){
-        if (tableNumber == null){
-            return "Take Away";
-        }
-        return null;
-    }
+
+
+
 }

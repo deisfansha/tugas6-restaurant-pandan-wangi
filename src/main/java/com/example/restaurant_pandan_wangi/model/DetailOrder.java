@@ -1,21 +1,30 @@
 package com.example.restaurant_pandan_wangi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
-public class TrDetailOrder {
+public class DetailOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private long idTrOrder;
+//    @ManyToOne
+//    @JoinColumn(name = "id_order", referencedColumnName = "id")
+//    private Order order;
+    @ManyToOne
+    @JoinColumn(name = "id_menu", referencedColumnName = "id")
+    private Menu menu;
     private int price;
     private int quantity;
-    private int statusOrder;    // 0 -> Sedang dimasak, 1 -> Sedang diantarkan, 2 -> Sudah disajikan
+    private int statusOrder = 0;    // 0 -> Pending, 1 -> Dimasak, 2 -> Diantarkan, 3 -> Disajikan
 
-    public TrDetailOrder() {
+    public DetailOrder() {
         // Do Nothing
     }
 
@@ -23,12 +32,20 @@ public class TrDetailOrder {
         return id;
     }
 
-    public long getIdTrOrder() {
-        return idTrOrder;
+//    public Order getOrder() {
+//        return order;
+//    }
+//
+//    public void setOrder(Order order) {
+//        this.order = order;
+//    }
+
+    public Menu getMenu() {
+        return menu;
     }
 
-    public void setIdTrOrder(long idTrOrder) {
-        this.idTrOrder = idTrOrder;
+    public void setMenu(Menu menu) {
+        this.menu = menu;
     }
 
     public int getPrice() {
@@ -50,16 +67,19 @@ public class TrDetailOrder {
     public String getStatusOrder() {
         switch (statusOrder) {
             case 0 :
-                return "Sedang dimasak";
+                return "Pending";
             case 1 :
-                return "Sedang diantarkan";
+                return "Dimasak";
             case 2 :
-                return "Sudah disajikan";
+                return "Diantarkan";
+            case 3 :
+                return "Disajikan";
             default:
                 return "Status tidak ditemukan";
         }
     }
 
+    @JsonIgnore
     public int getStatus() {
         return statusOrder;
     }

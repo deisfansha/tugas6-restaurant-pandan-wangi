@@ -39,6 +39,23 @@ public class DetailOrderController {
                 ));
     }
 
+    @GetMapping("{id}")
+    public ResponseEntity getAllDetailOrderById(@PathVariable long id) {
+        if (detailOrderService.getDetailOrderById(id) != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new ApiResponse(
+                            detailOrderService.getMessage(),
+                            detailOrderService.getDetailOrderById(id)
+                    ));
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                    new ApiResponse(
+                            detailOrderService.getMessage()
+                    ));
+        }
+
+    }
+
     @PostMapping("")
     public ResponseEntity addDetailOrder(@RequestBody DetailOrder detailOrderRequest) {
         if (detailOrderService.add(detailOrderRequest)) {

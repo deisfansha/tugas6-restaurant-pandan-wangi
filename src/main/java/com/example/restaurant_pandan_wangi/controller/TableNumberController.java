@@ -47,6 +47,23 @@ public class TableNumberController {
                 ));
     }
 
+    @GetMapping("{id}")
+    public ResponseEntity getAllTableById(@PathVariable long id) {
+        if (tableNumberService.getTableById(id) != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new ApiResponse(
+                            tableNumberService.getMessage(),
+                            tableNumberService.getTableById(id)
+                    ));
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                    new ApiResponse(
+                            tableNumberService.getMessage()
+                    ));
+        }
+
+    }
+
     @PostMapping("")
     public ResponseEntity addTable() {
         tableNumberService.add();

@@ -79,4 +79,16 @@ public class TableNumberService {
     public List<TableNumber> getAllTableByActive(boolean isActive) {
         return tableNumberRepository.findAllTableByActive(isActive);
     }
+
+    public TableNumber getTableById(long id) {
+        Optional<TableNumber> tableNumberOptional = tableNumberRepository.findById(id);
+
+        if (tableNumberOptional.isPresent()) {
+            message = "Table ID Found.";
+            return tableNumberOptional.get();
+        } else {
+            message = "Table ID Not Found.";
+            return null;
+        }
+    }
 }

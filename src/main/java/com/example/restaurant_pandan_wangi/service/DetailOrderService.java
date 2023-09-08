@@ -31,14 +31,6 @@ public class DetailOrderService {
         return message;
     }
 
-    public List<DetailOrder> getAllDetailOrder() {
-        return detailOrderRepository.findAllDetailOrder();
-    }
-
-    public List<DetailOrder> gettAllDetailOrderByIdOrder(long idOrder) {
-        return detailOrderRepository.findAllDetailOrderByIdOrder(idOrder);
-    }
-
     public boolean add(DetailOrder detailOrderRequest) {
         if (detailOrderRequest.getOrder() == null) {
             message = "Please insert ID Order.";
@@ -98,6 +90,26 @@ public class DetailOrderService {
             detailOrderRepository.deleteAll(detailOrdersByIdOrder);
             message = "List DetailOrder by ID Order `" + idOrderRequest + "` deleted successfully.";
             return true;
+        }
+    }
+
+    public List<DetailOrder> getAllDetailOrder() {
+        return detailOrderRepository.findAllDetailOrder();
+    }
+
+    public List<DetailOrder> gettAllDetailOrderByIdOrder(long idOrder) {
+        return detailOrderRepository.findAllDetailOrderByIdOrder(idOrder);
+    }
+
+    public DetailOrder getDetailOrderById(long id) {
+        Optional<DetailOrder> detailOrderOptional = detailOrderRepository.findById(id);
+
+        if (detailOrderOptional.isPresent()) {
+            message = "Detail Order ID Found.";
+            return detailOrderOptional.get();
+        } else {
+            message = "Detail Order ID Not Found.";
+            return null;
         }
     }
 }

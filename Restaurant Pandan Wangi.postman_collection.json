@@ -308,7 +308,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Santi\",\r\n    \"member\": false,\r\n    \"phone\": \"082384937594\"\r\n}",
+							"raw": "{\r\n    \"name\": \"Santi\",\r\n    \"member\": true,\r\n    \"phone\": \"082384937594\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -351,7 +351,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"sdjkhskdjhf\",\n    \"member\": false,\n    \"phone\": \"9627383743\"\n}",
+							"raw": "{\n    \"name\": \"Budi\",\n    \"phone\": \"082384937594\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -708,7 +708,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/employees/true",
+							"raw": "http://localhost:8080/employees/position/true",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -716,6 +716,7 @@
 							"port": "8080",
 							"path": [
 								"employees",
+								"position",
 								"true"
 							]
 						}

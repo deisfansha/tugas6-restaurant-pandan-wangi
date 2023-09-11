@@ -30,13 +30,13 @@ public class CustomerService {
      * @return              True jika berhasil ditambahkan, dan false jika gagal.
      */
     public boolean add(Customer customerRequest) {
-        if (customerRequest.getName() != null && isNameValid(customerRequest.getName()) && isPhoneValid(customerRequest.getPhone())) {
-            customerRepository.save(customerRequest);
-            message = "Customer added successfully.";
-            return true;
-        } else {
+        if (isNameValid(customerRequest.getName()) || isPhoneValid(customerRequest.getPhone())){
+            message = "Invalid Input.";
             return false;
         }
+
+        customerRepository.save(customerRequest);
+        return true;
     }
 
     /**
@@ -53,7 +53,7 @@ public class CustomerService {
         if (!customerOptional.isPresent()) {
             message = "Customer ID Not Found.";
             return false;
-        } else if (customerRequest.getName() == null || !isNameValid(customerRequest.getName())) {
+        } else if (customerRequest.getName() == null || !isNameValid(customerRequest.getName()) || !isPhoneValid(customerRequest.getPhone()) ) {
             message = "Input invalid.";
             return false;
         } else {
@@ -66,6 +66,7 @@ public class CustomerService {
         }
     }
 
+
     public boolean updateIsMember(long id, boolean isMember) {
         Optional<Customer> customerOptional = customerRepository.findById(id);
 
@@ -76,7 +77,7 @@ public class CustomerService {
             customerOptional.get().setMember(isMember);
             customerRepository.save(customerOptional.get());
             if (isMember) {
-                message = "Successfully became a member !";
+                message = "Success";
             }
             current = customerOptional.get();
             return true;
@@ -118,7 +119,7 @@ public class CustomerService {
      * @return true     Jika nama valid, false jika tidak valid.
      */
     private boolean isNameValid(String name) {
-        return name.matches("[a-zA-Z0-9\\s]+");
+        return name == null || !name.matches("[a-zA-Z0-9\\s]+");
     }
 
     private void seed() {
@@ -129,19 +130,7 @@ public class CustomerService {
         customerRepository.save(new Customer("Grace", "0853849283", true));
     }
 
-    private boolean isPhoneValid(String phone_number) {
-        if (phone_number == null) {
-            message = "The value of `phone` cannot be null!";
-            return false;
-        } else if (phone_number.trim().isEmpty()) {
-            message = "The value of `phone` cannot be empty!";
-            return false;
-        } else if (!phone_number.matches("\\d+")) {
-            message = "The value of `phone` must be a number.";
-            return false;
-        } else if (phone_number.length() < 10 || phone_number.length() > 13) {
-            message = "The value of `phone` must be a number between 10 and 13.";
-            return false;
-        } else return true;
+    private boolean isPhoneValid(String phone_number){
+        return phone_number == null || !phone_number.matches("^[0-9]{8,13}$");
     }
 }

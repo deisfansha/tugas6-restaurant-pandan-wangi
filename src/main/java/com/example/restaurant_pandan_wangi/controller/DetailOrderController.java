@@ -2,13 +2,13 @@ package com.example.restaurant_pandan_wangi.controller;
 
 import com.example.restaurant_pandan_wangi.model.ApiResponse;
 import com.example.restaurant_pandan_wangi.model.DetailOrder;
-import com.example.restaurant_pandan_wangi.model.Menu;
 import com.example.restaurant_pandan_wangi.service.DetailOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,17 +25,17 @@ public class DetailOrderController {
     public ResponseEntity getAllDetailOrder() {
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ApiResponse(
-                        "All list Detail Order.",
+                        "Success",
                         detailOrderService.getAllDetailOrder()
                 ));
     }
 
     @GetMapping("/order/{id}")
-    public ResponseEntity getAllDetailOrderByIdOrder(@PathVariable long idOrder) {
+    public ResponseEntity getAllDetailOrderByIdOrder(@PathVariable long id) {
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ApiResponse(
-                        "All list Detail Order.",
-                        detailOrderService.gettAllDetailOrderByIdOrder(idOrder)
+                        "Success",
+                        detailOrderService.getAllDetailOrderByIdOrder(id)
                 ));
     }
 
@@ -44,7 +44,7 @@ public class DetailOrderController {
         if (detailOrderService.getDetailOrderById(id) != null) {
             return ResponseEntity.status(HttpStatus.OK).body(
                     new ApiResponse(
-                            detailOrderService.getMessage(),
+                            "Success",
                             detailOrderService.getDetailOrderById(id)
                     ));
         } else {
@@ -61,7 +61,7 @@ public class DetailOrderController {
         if (detailOrderService.add(detailOrderRequest)) {
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body(new ApiResponse(
-                            detailOrderService.getMessage(),
+                            "Success",
                             detailOrderRequest
                     ));
         } else {
@@ -77,7 +77,23 @@ public class DetailOrderController {
         if (detailOrderService.delete(id)) {
             return ResponseEntity.status(HttpStatus.OK)
                     .body(new ApiResponse(
-                            detailOrderService.getMessage(),
+                            "Success",
+                            detailOrderService.getCurrent()
+                    ));
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(new ApiResponse(
+                            detailOrderService.getMessage()
+                    ));
+        }
+    }
+
+    @PatchMapping("/status/{id}")
+    public ResponseEntity updateActivated(@PathVariable long id, @RequestBody DetailOrder detailOrderRequest) {
+        if (detailOrderService.updateStatusOrder(id, detailOrderRequest.getStatusOrder())) {
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(new ApiResponse(
+                            "Success",
                             detailOrderService.getCurrent()
                     ));
         } else {

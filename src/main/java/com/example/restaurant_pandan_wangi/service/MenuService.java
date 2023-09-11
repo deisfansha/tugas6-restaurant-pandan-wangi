@@ -27,10 +27,9 @@ public class MenuService {
         if (menuRequest.getName() != null && isNameValid(menuRequest.getName()) &&
                 menuRequest.getPrice() > 0) {
             menuRepository.save(menuRequest);
-            message = "Menu added successfully.";
             return true;
         } else {
-            message = "Input invalid.";
+            message = "Input Invalid.";
             return false;
         }
     }
@@ -39,19 +38,18 @@ public class MenuService {
         Optional<Menu> menuOptional = menuRepository.findById(id);
 
         if (!menuOptional.isPresent()) {
-            message = "Menu ID Not Found.";
+            message = "Menu Not Found";
             return false;
         } else if (menuRequest.getName() == null ||
                 !isNameValid(menuRequest.getName()) ||
                 menuRequest.getPrice() <= 0) {
-            message = "Input invalid.";
+            message = "Input Invalid";
             return false;
         } else {
             menuOptional.get().setName(menuRequest.getName());
             menuOptional.get().setPrice(menuRequest.getPrice());
             menuOptional.get().setCategory(menuRequest.isCategory());
             menuRepository.save(menuOptional.get());
-            message = "Menu with ID `" + id + "` updated successfully.";
             current = menuOptional.get();
             return true;
         }
@@ -61,16 +59,11 @@ public class MenuService {
         Optional<Menu> menuOptional = menuRepository.findById(id);
 
         if (!menuOptional.isPresent()) {
-            message = "Menu ID Not Found.";
+            message = "Menu Not Found";
             return false;
         } else {
             menuOptional.get().setActive(menuRequest.isActive());
             menuRepository.save(menuOptional.get());
-            if (menuRequest.isActive()) {
-                message = "Menu ID `" + id + "` is now active.";
-            } else {
-                message = "Menu ID `" + id + "` is now inactive.";
-            }
             current = menuOptional.get();
             return true;
         }
@@ -97,10 +90,9 @@ public class MenuService {
         Optional<Menu> menuOptional = menuRepository.findById(id);
 
         if (menuOptional.isPresent()) {
-            message = "Menu ID Found.";
             return menuOptional.get();
         } else {
-            message = "Menu ID Not Found.";
+            message = "Menu Not Found";
             return null;
         }
     }

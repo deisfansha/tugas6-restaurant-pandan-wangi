@@ -11,7 +11,7 @@ import java.util.List;
 public interface MenuRepository extends JpaRepository<Menu, Long> {
     @Query("SELECT m FROM Menu m WHERE m.isActive = :isActive ORDER BY m.id")
     List<Menu> findMenuByActive(boolean isActive);
-    @Query("SELECT m FROM Menu m WHERE m.name LIKE %:name% ORDER BY m.id")
+    @Query("SELECT m FROM Menu m WHERE LOWER(m.name) LIKE LOWER(CONCAT('%', :name, '%')) ORDER BY m.id")
     List<Menu> findMenuByName(String name);
     @Query("SELECT m FROM Menu m WHERE m.category = :category ORDER BY m.id")
     List<Menu> findMenuByCategory(boolean category);

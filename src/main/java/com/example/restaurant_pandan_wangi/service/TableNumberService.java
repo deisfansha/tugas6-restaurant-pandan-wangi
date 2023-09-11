@@ -25,7 +25,6 @@ public class TableNumberService {
 
     public void add() {
         current = new TableNumber();
-        message = "Table added successfully.";
         tableNumberRepository.save(current);
     }
 
@@ -33,16 +32,11 @@ public class TableNumberService {
         Optional<TableNumber> tableNumberOptional = tableNumberRepository.findById(id);
 
         if (!tableNumberOptional.isPresent()) {
-            message = "Table ID Not Found.";
+            message = "Table Not Found";
             return false;
         } else {
             tableNumberOptional.get().setTableInUse(isUsed);
             tableNumberRepository.save(tableNumberOptional.get());
-            if (isUsed) {
-                message = "Table ID `" + id + "` is currently being used.";
-            } else {
-                message = "Table ID `" + id + "` is available.";
-            }
             current = tableNumberOptional.get();
             return true;
         }
@@ -52,14 +46,11 @@ public class TableNumberService {
         Optional<TableNumber> tableNumberOptional = tableNumberRepository.findById(id);
 
         if (!tableNumberOptional.isPresent()) {
-            message = "Table ID Not Found.";
+            message = "Table Not Found";
             return false;
         } else {
             tableNumberOptional.get().setActive(isActive);
-            if (isActive) {
-                message = "Table ID `" + id + "` is now active.";
-            } else {
-                message = "Table ID `" + id + "` is now inactive.";
+            if (!isActive) {
                 tableNumberOptional.get().setTableInUse(false);
             }
             tableNumberRepository.save(tableNumberOptional.get());
@@ -85,10 +76,9 @@ public class TableNumberService {
         Optional<TableNumber> tableNumberOptional = tableNumberRepository.findById(id);
 
         if (tableNumberOptional.isPresent()) {
-            message = "Table ID Found.";
             return tableNumberOptional.get();
         } else {
-            message = "Table ID Not Found.";
+            message = "Table Not Found";
             return null;
         }
     }

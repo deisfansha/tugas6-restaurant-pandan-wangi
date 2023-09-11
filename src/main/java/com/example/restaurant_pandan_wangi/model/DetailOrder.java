@@ -1,7 +1,5 @@
 package com.example.restaurant_pandan_wangi.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -71,7 +69,7 @@ public class DetailOrder {
         this.quantity = quantity;
     }
 
-    public String getStatusOrder() {
+    public String getStatus() {
         switch (statusOrder) {
             case 0 :
                 return "Pending";
@@ -86,8 +84,7 @@ public class DetailOrder {
         }
     }
 
-    @JsonIgnore
-    public int getStatus() {
+    public int getStatusOrder() {
         return statusOrder;
     }
 

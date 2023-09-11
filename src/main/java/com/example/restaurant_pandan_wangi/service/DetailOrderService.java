@@ -81,14 +81,32 @@ public class DetailOrderService {
         }
     }
 
-    public boolean deleteByIdOrder(long idOrderRequest) {
-        List<DetailOrder> detailOrdersByIdOrder = gettAllDetailOrderByIdOrder(idOrderRequest);
+    public void deleteByIdOrder(long idOrderRequest) {
+        List<DetailOrder> detailOrdersByIdOrder = getAllDetailOrderByIdOrder(idOrderRequest);
         if (detailOrdersByIdOrder.size() == 0) {
             message = "DetailOrder ID not found.";
-            return false;
         } else {
             detailOrderRepository.deleteAll(detailOrdersByIdOrder);
             message = "List DetailOrder by ID Order `" + idOrderRequest + "` deleted successfully.";
+        }
+    }
+
+    public boolean updateStatusOrder(long id, int status) {
+        Optional<DetailOrder> optionalDetailOrder = detailOrderRepository.findById(id);
+        current = null;
+
+        if (!optionalDetailOrder.isPresent()) {
+            message = "DetailOrder ID not found.";
+            return false;
+        } else if (status < 0 || status > 3) {
+            message = "Status order invalid.";
+            return false;
+        }
+        else {
+            optionalDetailOrder.get().setStatusOrder(status);
+            message = "DetailOrder with ID `" + id + "` status '" + optionalDetailOrder.get().getStatus() + "'.";
+            current = optionalDetailOrder.get();
+            detailOrderRepository.save(optionalDetailOrder.get());
             return true;
         }
     }
@@ -97,7 +115,7 @@ public class DetailOrderService {
         return detailOrderRepository.findAllDetailOrder();
     }
 
-    public List<DetailOrder> gettAllDetailOrderByIdOrder(long idOrder) {
+    public List<DetailOrder> getAllDetailOrderByIdOrder(long idOrder) {
         return detailOrderRepository.findAllDetailOrderByIdOrder(idOrder);
     }
 

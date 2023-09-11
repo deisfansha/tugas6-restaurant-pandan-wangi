@@ -27,12 +27,11 @@ public class EmployeeService {
     // Method tambah pegawai
     public boolean create(Employee employeeRequest){
         if (isNameNotValid(employeeRequest.getName()) || isPhoneNumberNotValid(employeeRequest.getPhoneNumber())){
-            message = "Input Invalid";
+            message = "Invalid Input.";
             return false;
         }
 
         employeeRepository.save(employeeRequest);
-        message = "Success";
         return true;
     }
 
@@ -43,7 +42,7 @@ public class EmployeeService {
     public List<Employee> getById(Long id){
         Optional<Employee> existingEmployee = employeeRepository.findById(id);
         if (!existingEmployee.isPresent()){
-            message = "Employee not found";
+            message = "Employee Not Found.";
             return null;
         }
         return employeeRepository.findAllById(id);
@@ -58,16 +57,12 @@ public class EmployeeService {
     }
 
     public boolean update(long id, Employee employeeRequest){
-
         Optional<Employee> existingEmployee = employeeRepository.findById(id);
         if (!existingEmployee.isPresent()){
-            message= "Employee Not Found";
+            message= "Employee Not Found.";
             return false;
-        }
-
-        if (isNameNotValid(employeeRequest.getName())
-        || isPhoneNumberNotValid(employeeRequest.getPhoneNumber())){
-            message = "Input Invalid ";
+        }else if (isNameNotValid(employeeRequest.getName()) || isPhoneNumberNotValid(employeeRequest.getPhoneNumber())){
+            message = "Invalid Input.";
             return false;
         }
 
@@ -75,7 +70,6 @@ public class EmployeeService {
         existingEmployee.get().setPhoneNumber(employeeRequest.getPhoneNumber());
         existingEmployee.get().setPosition(employeeRequest.isPosition());
         employeeRepository.save(existingEmployee.get());
-        message = "Success";
         current = existingEmployee.get();
         return true;
     }
@@ -84,13 +78,12 @@ public class EmployeeService {
         Optional<Employee> existingEmployee = employeeRepository.findById(id);
 
         if (!existingEmployee.isPresent()){
-            message = "Employee not found";
+            message = "Employee Not Found.";
             return false;
         }
 
         existingEmployee.get().setActive(employeeRequest.isActive());
         employeeRepository.save(existingEmployee.get());
-        message = "Success";
         current = existingEmployee.get();
         return true;
     }

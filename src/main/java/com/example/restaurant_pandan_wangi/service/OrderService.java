@@ -46,32 +46,30 @@ public class OrderService {
 
     public boolean createOrder(Order orderRequest){
         if (orderRequest.getCustomer() == null || orderRequest.getEmployee() == null){
-            message = "Invalid Input";
+            message = "Invalid Input.";
             return false;
         }
 
         Optional<Employee> existingEmployee = employeeRepository.findById(orderRequest.getEmployee().getId());
         Optional<Customer> existingCustomer = customerRepository.findById(orderRequest.getCustomer().getId());
 
-
-        if (!existingEmployee.isPresent() || !existingCustomer.isPresent()){
-            message = "Invalid Data";
+        if (!existingEmployee.isPresent()){
+            message = "Employee Not Found.";
             return false;
-        }
-
-        if (!existingEmployee.get().isPosition()){
-            message = "Invalid Position";
+        } else if (!existingCustomer.isPresent()) {
+            message = "Customer Not Found.";
             return false;
-        }
-
-        if (orderRequest.getTableNumber() != null){
+        } else if (!existingEmployee.get().isPosition()){
+            message = "Invalid Position To Create Order";
+            return false;
+        } else if (orderRequest.getTableNumber() != null){
             Optional<TableNumber> tableNotUse = tableNumberRepository.findById(orderRequest.getTableNumber().getId());
             if (tableNotUse.isPresent() && !tableNotUse.get().isTableInUse()){
                 tableNotUse.get().setTableInUse(true);
                 orderRequest.setTableNumber(tableNotUse.get());
                 tableNumberRepository.save(tableNotUse.get());
             }else {
-                message = "Table not found";
+                message = "Table Not Found.";
                 return false;
             }
         }
@@ -83,7 +81,6 @@ public class OrderService {
         orderRequest.setEmployee(existingEmployee.get());
         orderRequest.setCreatedAt(Date.valueOf(created));
         orderRepository.save(orderRequest);
-        message = "Success";
         return true;
     }
 
@@ -94,7 +91,7 @@ public class OrderService {
     public List<Order> getById(long id){
         Optional<Order> existingOrder = orderRepository.findById(id);
         if (!existingOrder.isPresent()){
-            message = "Order Not Found";
+            message = "Order Not Found.";
             return null;
         }
         return orderRepository.findAllById(id);
@@ -103,16 +100,14 @@ public class OrderService {
     public boolean deleteOrder(long orderId){
         Optional<Order> existingOrder = orderRepository.findById(orderId);
         if (!existingOrder.isPresent()){
-            message = "Order not found";
+            message = "Order Not Found.";
             return false;
-        }
-        if (existingOrder.get().getTableNumber() != null){
+        } else if (existingOrder.get().getTableNumber() != null){
             tableNumberService.updateInUse(existingOrder.get().getTableNumber().getId(), false);
         }
 
         detailOrderService.deleteByIdOrder(orderId);
         orderRepository.deleteById(orderId);
-        message = "Success";
         current = existingOrder.get();
         return true;
     }

@@ -16,11 +16,11 @@ public interface EmployeeRepository extends JpaRepository <Employee, Long> {
 
     @Query("SELECT e from Employee e ORDER BY e.id ASC")
     List<Employee> findAllSorting();
-    List<Employee> findAllById(Long id);
+    List<Employee> findAllById(long id);
 
     @Query("SELECT e from Employee e where e.isActive = true and e.position = :position ORDER BY e.id ASC")
     List<Employee> findAllByPosition(boolean position);
 
-    Optional<Employee> findById(Long id);
+    Optional<Employee> findById(long id);
 
 }

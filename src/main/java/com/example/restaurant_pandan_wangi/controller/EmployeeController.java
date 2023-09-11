@@ -25,7 +25,7 @@ public class EmployeeController {
     public ResponseEntity createdEmployee(@RequestBody Employee employeeRequest){
         boolean added = employeeService.create(employeeRequest);
         if (added){
-            return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse(employeeService.getMessage(), employeeRequest));
+            return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Success", employeeRequest));
         }else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(employeeService.getMessage()));
         }
@@ -37,7 +37,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity getEmployeeById(@PathVariable Long id){
+    public ResponseEntity getEmployeeById(@PathVariable long id){
         if (employeeService.getById(id) == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(employeeService.getMessage()));
         }else {
@@ -56,20 +56,20 @@ public class EmployeeController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity updatedEmployee(@PathVariable Long id, @RequestBody Employee employeeRequest){
+    public ResponseEntity updatedEmployee(@PathVariable long id, @RequestBody Employee employeeRequest){
         boolean updated = employeeService.update(id,employeeRequest);
         if (updated){
-            return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse(employeeService.getMessage(), employeeService.getCurrent()));
+            return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Success", employeeService.getCurrent()));
         }else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(employeeService.getMessage()));
         }
     }
 
     @PatchMapping("/actives/{id}")
-    public ResponseEntity updatedActiveEmployee(@PathVariable Long id, @RequestBody Employee employeeRequest){
+    public ResponseEntity updatedActiveEmployee(@PathVariable long id, @RequestBody Employee employeeRequest){
         boolean updated = employeeService.updateActived(id,employeeRequest);
         if (updated){
-            return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse(employeeService.getMessage(), employeeService.getCurrent()));
+            return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Success", employeeService.getCurrent()));
         }else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(employeeService.getMessage()));
         }

@@ -35,8 +35,7 @@ public class DetailOrderService {
         if (detailOrderRequest.getOrder() == null) {
             message = "Invalid order";
             return false;
-        } else
-        if (detailOrderRequest.getMenu() == null) {
+        } else if (detailOrderRequest.getMenu() == null) {
             message = "Invalid menu";
             return false;
         }
@@ -78,6 +77,7 @@ public class DetailOrderService {
 
     public void deleteByIdOrder(long idOrderRequest) {
         List<DetailOrder> detailOrdersByIdOrder = getAllDetailOrderByIdOrder(idOrderRequest);
+
         if (detailOrdersByIdOrder.size() == 0) {
             message = "DetailOrder Not Found";
         } else {

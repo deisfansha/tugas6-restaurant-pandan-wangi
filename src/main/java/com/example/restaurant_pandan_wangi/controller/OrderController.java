@@ -33,7 +33,7 @@ public class OrderController {
 
     // API untuk menampilkan semua daftar Order.
     @GetMapping("")
-    public ResponseEntity getAllOrder(){
+    public ResponseEntity getAllOrders(){
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Success", orderService.getAll()));
     }
 

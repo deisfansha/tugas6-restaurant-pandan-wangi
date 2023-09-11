@@ -25,7 +25,7 @@ public class MenuController {
     public ResponseEntity getAllMenu() {
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ApiResponse(
-                        "All list Menu.",
+                        "Success",
                         menuService.getAllMenu()
                 ));
     }
@@ -34,7 +34,7 @@ public class MenuController {
     public ResponseEntity getAllMenuByActive(@PathVariable boolean isActive) {
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ApiResponse(
-                        (isActive) ? "All list Menu active." : "All list Menu non-active.",
+                        "Success",
                         menuService.getAllMenuByActive(isActive)
                 ));
     }
@@ -43,7 +43,7 @@ public class MenuController {
     public ResponseEntity getAllMenuByName(@PathVariable String name) {
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ApiResponse(
-                        "All list Menu.",
+                        "Success",
                         menuService.getAllMenuByName(name)
                 ));
     }
@@ -52,7 +52,7 @@ public class MenuController {
     public ResponseEntity getAllMenuByCategory(@PathVariable boolean category) {
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ApiResponse(
-                        (category) ? "All list Menu by Food." : "All list Menu by Drink.",
+                        "Success",
                         menuService.getAllMenuByCategory(category)
                 ));
     }
@@ -62,7 +62,7 @@ public class MenuController {
         if (menuService.getMenuById(id) != null) {
             return ResponseEntity.status(HttpStatus.OK)
                     .body(new ApiResponse(
-                            menuService.getMessage(),
+                            "Success",
                             menuService.getMenuById(id)
                     ));
         } else {
@@ -78,7 +78,7 @@ public class MenuController {
         if (menuService.add(menuRequest)) {
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body(new ApiResponse(
-                            menuService.getMessage(),
+                            "Success",
                             menuRequest
                     ));
         } else {
@@ -94,7 +94,7 @@ public class MenuController {
         if (menuService.updateData(id,menuRequest)) {
             return ResponseEntity.status(HttpStatus.OK)
                     .body(new ApiResponse(
-                            menuService.getMessage(),
+                            "Success",
                             menuService.getCurrent()
                     ));
         } else {
@@ -110,7 +110,7 @@ public class MenuController {
         if (menuService.updateStatus(id,menuRequest)) {
             return ResponseEntity.status(HttpStatus.OK)
                     .body(new ApiResponse(
-                            menuService.getMessage(),
+                            "Success",
                             menuService.getCurrent()
                     ));
         } else {

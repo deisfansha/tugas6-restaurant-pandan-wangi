@@ -25,7 +25,7 @@ public class DetailOrderController {
     public ResponseEntity getAllDetailOrder() {
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ApiResponse(
-                        "All list Detail Order.",
+                        "Success",
                         detailOrderService.getAllDetailOrder()
                 ));
     }
@@ -34,7 +34,7 @@ public class DetailOrderController {
     public ResponseEntity getAllDetailOrderByIdOrder(@PathVariable long id) {
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ApiResponse(
-                        "All list Detail Order.",
+                        "Success",
                         detailOrderService.getAllDetailOrderByIdOrder(id)
                 ));
     }
@@ -44,7 +44,7 @@ public class DetailOrderController {
         if (detailOrderService.getDetailOrderById(id) != null) {
             return ResponseEntity.status(HttpStatus.OK).body(
                     new ApiResponse(
-                            detailOrderService.getMessage(),
+                            "Success",
                             detailOrderService.getDetailOrderById(id)
                     ));
         } else {
@@ -61,7 +61,7 @@ public class DetailOrderController {
         if (detailOrderService.add(detailOrderRequest)) {
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body(new ApiResponse(
-                            detailOrderService.getMessage(),
+                            "Success",
                             detailOrderRequest
                     ));
         } else {
@@ -77,7 +77,7 @@ public class DetailOrderController {
         if (detailOrderService.delete(id)) {
             return ResponseEntity.status(HttpStatus.OK)
                     .body(new ApiResponse(
-                            detailOrderService.getMessage(),
+                            "Success",
                             detailOrderService.getCurrent()
                     ));
         } else {
@@ -93,7 +93,7 @@ public class DetailOrderController {
         if (detailOrderService.updateStatusOrder(id, detailOrderRequest.getStatusOrder())) {
             return ResponseEntity.status(HttpStatus.OK)
                     .body(new ApiResponse(
-                            detailOrderService.getMessage(),
+                            "Success",
                             detailOrderService.getCurrent()
                     ));
         } else {

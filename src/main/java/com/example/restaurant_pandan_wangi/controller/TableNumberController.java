@@ -24,7 +24,7 @@ public class TableNumberController {
     public ResponseEntity getAllTable() {
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ApiResponse(
-                        "All list Table.",
+                        "Success",
                         tableNumberService.getAllTable()
                 ));
     }
@@ -33,7 +33,7 @@ public class TableNumberController {
     public ResponseEntity getAllTableByActive(@PathVariable boolean isActive) {
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ApiResponse(
-                        (isActive) ? "All list Table active." : "All list Table non-active.",
+                        "Success",
                         tableNumberService.getAllTableByActive(isActive)
                 ));
     }
@@ -42,7 +42,7 @@ public class TableNumberController {
     public ResponseEntity getAllTableByUse(@PathVariable boolean isUsed) {
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ApiResponse(
-                        (isUsed) ? "List of tables currently in use." : "List of tables not currently in use.",
+                        "Success",
                         tableNumberService.getAllTableByInUse(isUsed)
                 ));
     }
@@ -52,7 +52,7 @@ public class TableNumberController {
         if (tableNumberService.getTableById(id) != null) {
             return ResponseEntity.status(HttpStatus.OK).body(
                     new ApiResponse(
-                            tableNumberService.getMessage(),
+                            "Success",
                             tableNumberService.getTableById(id)
                     ));
         } else {
@@ -69,7 +69,7 @@ public class TableNumberController {
         tableNumberService.add();
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(new ApiResponse(
-                        tableNumberService.getMessage(),
+                        "Success",
                         tableNumberService.getCurrent()
                 ));
     }
@@ -79,7 +79,7 @@ public class TableNumberController {
         if (tableNumberService.updateStatus(id,tableNumberRequest.isActive())) {
             return ResponseEntity.status(HttpStatus.OK)
                     .body(new ApiResponse(
-                            tableNumberService.getMessage(),
+                            "Success",
                             tableNumberService.getCurrent()
                     ));
         } else {
@@ -95,7 +95,7 @@ public class TableNumberController {
         if (tableNumberService.updateInUse(id,tableNumberRequest.isTableInUse())) {
             return ResponseEntity.status(HttpStatus.OK)
                     .body(new ApiResponse(
-                            tableNumberService.getMessage(),
+                            "Success",
                             tableNumberService.getCurrent()
                     ));
         } else {

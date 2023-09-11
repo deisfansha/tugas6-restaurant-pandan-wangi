@@ -30,12 +30,11 @@ public class CustomerService {
      * @return              True jika berhasil ditambahkan, dan false jika gagal.
      */
     public boolean add(Customer customerRequest) {
-        if (customerRequest.getName() != null && isNameValid(customerRequest.getName())) {
+        if (customerRequest.getName() != null && isNameValid(customerRequest.getName()) && isPhoneValid(customerRequest.getPhone())) {
             customerRepository.save(customerRequest);
             message = "Customer added successfully.";
             return true;
         } else {
-            message = "Input invalid.";
             return false;
         }
     }
@@ -128,5 +127,21 @@ public class CustomerService {
         customerRepository.save(new Customer("Carol", "08937389238", false));
         customerRepository.save(new Customer("Frank", "082174839823", true));
         customerRepository.save(new Customer("Grace", "0853849283", true));
+    }
+
+    private boolean isPhoneValid(String phone_number) {
+        if (phone_number == null) {
+            message = "The value of `phone` cannot be null!";
+            return false;
+        } else if (phone_number.trim().isEmpty()) {
+            message = "The value of `phone` cannot be empty!";
+            return false;
+        } else if (!phone_number.matches("\\d+")) {
+            message = "The value of `phone` must be a number.";
+            return false;
+        } else if (phone_number.length() < 10 || phone_number.length() > 13) {
+            message = "The value of `phone` must be a number between 10 and 13.";
+            return false;
+        } else return true;
     }
 }

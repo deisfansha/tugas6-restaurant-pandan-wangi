@@ -21,6 +21,7 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
+    // API untuk menambahkan Employee baru berdasarkan request.
     @PostMapping("")
     public ResponseEntity createdEmployee(@RequestBody Employee employeeRequest){
         boolean added = employeeService.create(employeeRequest);
@@ -31,11 +32,13 @@ public class EmployeeController {
         }
     }
 
+    // API untuk menampilkan semua daftar Employee.
     @GetMapping("")
     public ResponseEntity getAllEmployee(){
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Success", employeeService.getAll()));
     }
 
+    // API untuk menampilkan informasi Employee berdasarkan ID Employee.
     @GetMapping("/{id}")
     public ResponseEntity getEmployeeById(@PathVariable long id){
         if (employeeService.getById(id) == null){
@@ -45,16 +48,19 @@ public class EmployeeController {
         }
     }
 
+    // API untuk menampilkan daftar Employee berdasarkan yang masih bekerja.
     @GetMapping("/actived")
     public ResponseEntity getAllActivedEmployee(){
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Success", employeeService.getAllByIsActive()));
     }
 
+    // API untuk menampilkan daftar Employee berdasarkan poisisi.
     @GetMapping("/position/{position}")
     public ResponseEntity getAllPositionEmployee(@PathVariable boolean position){
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Success", employeeService.getAllByPosition(position)));
     }
 
+    // API untuk memperbarui informasi Employee berdasarkan ID Employee dan request.
     @PutMapping("/{id}")
     public ResponseEntity updatedEmployee(@PathVariable long id, @RequestBody Employee employeeRequest){
         boolean updated = employeeService.update(id,employeeRequest);
@@ -65,9 +71,10 @@ public class EmployeeController {
         }
     }
 
+    // API untuk memperbarui status bekerja Employee berdasarkan ID Employee.
     @PatchMapping("/actives/{id}")
     public ResponseEntity updatedActiveEmployee(@PathVariable long id, @RequestBody Employee employeeRequest){
-        boolean updated = employeeService.updateActived(id,employeeRequest);
+        boolean updated = employeeService.updateActivated(id,employeeRequest);
         if (updated){
             return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Success", employeeService.getCurrent()));
         }else {

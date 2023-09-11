@@ -23,11 +23,21 @@ public class TableNumberService {
         return message;
     }
 
+    /**
+     * Menambahkan Nomor Meja baru.
+     */
     public void add() {
         current = new TableNumber();
         tableNumberRepository.save(current);
     }
 
+    /**
+     * Memperbarui status meja sedang digunakan oleh Customer atau tidak.
+     *
+     * @param id        ID meja yang ingin diperbarui.
+     * @param isUsed    Status meja.
+     * @return          True jika berhasil diperbarui, false jika gagal.
+     */
     public boolean updateInUse(long id, boolean isUsed) {
         Optional<TableNumber> tableNumberOptional = tableNumberRepository.findById(id);
 
@@ -42,6 +52,13 @@ public class TableNumberService {
         }
     }
 
+    /**
+     * Memperbarui status meja sedang tersedia dalam ruangan atau tidak.
+     *
+     * @param id        ID meja yang ingin diperbarui.
+     * @param isActive  Status meja.
+     * @return          True jika berhasil diperbarui, false jika gagal.
+     */
     public boolean updateStatus(long id, boolean isActive) {
         Optional<TableNumber> tableNumberOptional = tableNumberRepository.findById(id);
 
@@ -59,19 +76,42 @@ public class TableNumberService {
         }
     }
 
+    /**
+     * Mengembalikan semua daftar meja.
+     *
+     * @return          Daftar meja.
+     */
     public List<TableNumber> getAllTable() {
         if (tableNumberRepository.count() == 0) seed();
         return tableNumberRepository.findAllTable();
     }
 
+    /**
+     * Mengembalikan daftar meja berdasarkan status digunakan.
+     *
+     * @param isUsed    Status meja.
+     * @return          Daftar meja.
+     */
     public List<TableNumber> getAllTableByInUse(boolean isUsed) {
         return tableNumberRepository.findAllTableByInUse(isUsed);
     }
 
+    /**
+     * Mengembalikan daftar meja berdasarkan status tersedia.
+     *
+     * @param isActive  Status meja.
+     * @return          Daftar meja.
+     */
     public List<TableNumber> getAllTableByActive(boolean isActive) {
         return tableNumberRepository.findAllTableByActive(isActive);
     }
 
+    /**
+     * Mengembalikan informasi meja berdasarkan ID meja.
+     *
+     * @param id    ID Meja.
+     * @return      Informasi meja jika tersedia, null jika tidak tersedia.
+     */
     public TableNumber getTableById(long id) {
         Optional<TableNumber> tableNumberOptional = tableNumberRepository.findById(id);
 

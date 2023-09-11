@@ -31,6 +31,12 @@ public class DetailOrderService {
         return message;
     }
 
+    /**
+     * Menambahkan DetailOrder baru.
+     *
+     * @param detailOrderRequest    DetailOrder yang akan ditambahkan.
+     * @return                      True jika berhasil ditambahkan, false jika gagal.
+     */
     public boolean add(DetailOrder detailOrderRequest) {
         if (detailOrderRequest.getOrder() == null) {
             message = "Invalid order";
@@ -61,6 +67,12 @@ public class DetailOrderService {
         }
     }
 
+    /**
+     * Menghapus DetailOrder.
+     *
+     * @param id    ID DetailOrder yang akan dihapus.
+     * @return      True jika berhasil dihapus, false jika gagal.
+     */
     public boolean delete(long id) {
         Optional<DetailOrder> optionalDetailOrder = detailOrderRepository.findById(id);
         current = null;
@@ -75,8 +87,13 @@ public class DetailOrderService {
         }
     }
 
-    public void deleteByIdOrder(long idOrderRequest) {
-        List<DetailOrder> detailOrdersByIdOrder = getAllDetailOrderByIdOrder(idOrderRequest);
+    /**
+     * Menghapus daftar DetailOrder berdasarkan ID Order.
+     *
+     * @param idOrder   ID DetailOrder yang akan dihapus.
+     */
+    public void deleteByIdOrder(long idOrder) {
+        List<DetailOrder> detailOrdersByIdOrder = getAllDetailOrderByIdOrder(idOrder);
 
         if (detailOrdersByIdOrder.size() == 0) {
             message = "DetailOrder Not Found";
@@ -85,6 +102,13 @@ public class DetailOrderService {
         }
     }
 
+    /**
+     * Memperbarui status order yang ada berdasarkan ID DetailOrder.
+     *
+     * @param id        ID DetailOrder yang akan diperbarui.
+     * @param status    Status order yang ingin diperbarui.
+     * @return          True jika berhasil diperbarui, false jika gagal.
+     */
     public boolean updateStatusOrder(long id, int status) {
         Optional<DetailOrder> optionalDetailOrder = detailOrderRepository.findById(id);
         current = null;
@@ -95,8 +119,7 @@ public class DetailOrderService {
         } else if (status < 0 || status > 3) {
             message = "Input Invalid";
             return false;
-        }
-        else {
+        } else {
             optionalDetailOrder.get().setStatusOrder(status);
             current = optionalDetailOrder.get();
             detailOrderRepository.save(optionalDetailOrder.get());
@@ -104,14 +127,31 @@ public class DetailOrderService {
         }
     }
 
+    /**
+     * Mengembalikan semua daftar DetailOrder.
+     *
+     * @return      Daftar DetailOrder.
+     */
     public List<DetailOrder> getAllDetailOrder() {
         return detailOrderRepository.findAllDetailOrder();
     }
 
+    /**
+     * Mengembalikan daftar DetailOrder berdasarkan ID Order.
+     *
+     * @param idOrder   ID Order.
+     * @return          Daftar DetailOrder.
+     */
     public List<DetailOrder> getAllDetailOrderByIdOrder(long idOrder) {
         return detailOrderRepository.findAllDetailOrderByIdOrder(idOrder);
     }
 
+    /**
+     * Mengembalikan DetailOrder berdasarkan ID Order.
+     *
+     * @param id    ID DetailOrder.
+     * @return      DetailOrder jika tersedia, null jika tidak tersedia.
+     */
     public DetailOrder getDetailOrderById(long id) {
         Optional<DetailOrder> detailOrderOptional = detailOrderRepository.findById(id);
 

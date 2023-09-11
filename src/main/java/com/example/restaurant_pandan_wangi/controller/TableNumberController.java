@@ -20,6 +20,7 @@ public class TableNumberController {
     @Autowired
     private TableNumberService tableNumberService;
 
+    // API untuk menampilkan semua daftar meja.
     @GetMapping("")
     public ResponseEntity getAllTable() {
         return ResponseEntity.status(HttpStatus.OK).body(
@@ -29,6 +30,7 @@ public class TableNumberController {
                 ));
     }
 
+    // API untuk menampilkan daftar meja berdasarkan status tersedia.
     @GetMapping("/actived/{isActive}")
     public ResponseEntity getAllTableByActive(@PathVariable boolean isActive) {
         return ResponseEntity.status(HttpStatus.OK).body(
@@ -38,6 +40,7 @@ public class TableNumberController {
                 ));
     }
 
+    // API untuk menampilkan daftar meja berdasarkan status digunakan.
     @GetMapping("/in-used/{isUsed}")
     public ResponseEntity getAllTableByUse(@PathVariable boolean isUsed) {
         return ResponseEntity.status(HttpStatus.OK).body(
@@ -47,6 +50,7 @@ public class TableNumberController {
                 ));
     }
 
+    // API untuk menampilkan informasi meja berdasarkan ID Meja.
     @GetMapping("{id}")
     public ResponseEntity getAllTableById(@PathVariable long id) {
         if (tableNumberService.getTableById(id) != null) {
@@ -64,6 +68,7 @@ public class TableNumberController {
 
     }
 
+    // API untuk menambahkan meja baru.
     @PostMapping("")
     public ResponseEntity addTable() {
         tableNumberService.add();
@@ -74,6 +79,7 @@ public class TableNumberController {
                 ));
     }
 
+    // API untuk memperbarui status tersedia meja berdasarkan ID Meja dan request.
     @PatchMapping("/{id}/activated")
     public ResponseEntity updateActivated(@PathVariable long id, @RequestBody TableNumber tableNumberRequest) {
         if (tableNumberService.updateStatus(id,tableNumberRequest.isActive())) {
@@ -90,6 +96,7 @@ public class TableNumberController {
         }
     }
 
+    // API untuk memperbarui status penggunaan meja berdasarakan ID Meja dan request.
     @PatchMapping("/in-used/{id}")
     public ResponseEntity updateInUsed(@PathVariable long id, @RequestBody TableNumber tableNumberRequest) {
         if (tableNumberService.updateInUse(id,tableNumberRequest.isTableInUse())) {

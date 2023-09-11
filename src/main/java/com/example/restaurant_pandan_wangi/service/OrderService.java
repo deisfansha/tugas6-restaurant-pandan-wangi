@@ -32,7 +32,6 @@ public class OrderService {
     private DetailOrderService detailOrderService;
     @Autowired
     private TableNumberService tableNumberService;
-
     private Order current;
     private String message;
 
@@ -44,6 +43,12 @@ public class OrderService {
         return current;
     }
 
+    /**
+     * Menambahkan Order baru.
+     *
+     * @param orderRequest  Order yang akan ditambahkan.
+     * @return              True jika berhasil ditambahkan, false jika gagal.
+     */
     public boolean createOrder(Order orderRequest){
         if (orderRequest.getCustomer() == null || orderRequest.getEmployee() == null){
             message = "Invalid Input.";
@@ -84,10 +89,21 @@ public class OrderService {
         return true;
     }
 
+    /**
+     * Mengembalikan semua daftar Order.
+     *
+     * @return          Daftar Order.
+     */
     public List<Order> getAll(){
         return orderRepository.findAll();
     }
 
+    /**
+     * Mengembalikan Order berdasarkan ID Order.
+     *
+     * @param id    ID Order.
+     * @return      Order jika tersedia, null jika tidak tersedia.
+     */
     public List<Order> getById(long id){
         Optional<Order> existingOrder = orderRepository.findById(id);
         if (!existingOrder.isPresent()){
@@ -97,6 +113,12 @@ public class OrderService {
         return orderRepository.findAllById(id);
     }
 
+    /**
+     * Menghapus Order beserta DetailOrder berdasarkan ID Order.
+     *
+     * @param orderId   ID Order yang akan dihapus.
+     * @return          True jika berhasil dihapus, false jika gagal.
+     */
     public boolean deleteOrder(long orderId){
         Optional<Order> existingOrder = orderRepository.findById(orderId);
         if (!existingOrder.isPresent()){

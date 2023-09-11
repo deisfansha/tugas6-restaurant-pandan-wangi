@@ -20,17 +20,10 @@ public class DetailOrder {
     private Menu menu;
     private int price;
     private int quantity;
-    private int statusOrder = 0;    // 0 -> Pending, 1 -> Dimasak, 2 -> Diantarkan, 3 -> Disajikan
+    private int statusOrder = 0;    // 0 -> Pending, 1 -> Cooking, 2 -> Deliver, 3 -> Done
 
     public DetailOrder() {
         // Do Nothing
-    }
-
-    public DetailOrder(Order order, Menu menu, int price, int quantity) {
-        this.order = order;
-        this.menu = menu;
-        this.price = price;
-        this.quantity = quantity;
     }
 
     public long getId() {

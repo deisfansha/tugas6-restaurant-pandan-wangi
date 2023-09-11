@@ -20,6 +20,7 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
+    // API untuk menambahkan Order baru berdasarkan request.
     @PostMapping("")
     public ResponseEntity createOrder(@RequestBody Order orderRequest){
         boolean added = orderService.createOrder(orderRequest);
@@ -30,11 +31,13 @@ public class OrderController {
         }
     }
 
+    // API untuk menampilkan semua daftar Order.
     @GetMapping("")
-    public ResponseEntity getAllPositionEmployee(){
+    public ResponseEntity getAllOrder(){
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Success", orderService.getAll()));
     }
 
+    // API untuk menampilkan informasi Order berdasarkan ID Order.
     @GetMapping("/{id}")
     public ResponseEntity getAllById(@PathVariable long id){
         if (orderService.getById(id) == null){
@@ -44,6 +47,7 @@ public class OrderController {
         }
     }
 
+    // API untuk menghapus Order berdasarkan ID Order.
     @DeleteMapping("/{id}")
     public ResponseEntity deleteOrder(@PathVariable long id){
         boolean deleted = orderService.deleteOrder(id);

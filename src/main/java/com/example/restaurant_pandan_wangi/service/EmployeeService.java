@@ -57,7 +57,7 @@ public class EmployeeService {
         return employeeRepository.findAllByPosition(position);
     }
 
-    public boolean update(Long id, Employee employeeRequest){
+    public boolean update(long id, Employee employeeRequest){
 
         Optional<Employee> existingEmployee = employeeRepository.findById(id);
         if (!existingEmployee.isPresent()){
@@ -80,7 +80,7 @@ public class EmployeeService {
         return true;
     }
 
-    public boolean updateActived(Long id, Employee employeeRequest){
+    public boolean updateActived(long id, Employee employeeRequest){
         Optional<Employee> existingEmployee = employeeRepository.findById(id);
 
         if (!existingEmployee.isPresent()){

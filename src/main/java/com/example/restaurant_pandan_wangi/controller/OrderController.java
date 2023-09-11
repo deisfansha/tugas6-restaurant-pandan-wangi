@@ -36,7 +36,7 @@ public class OrderController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity getAllById(@PathVariable Long id){
+    public ResponseEntity getAllById(@PathVariable long id){
         if (orderService.getById(id) == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(orderService.getMessage()));
         }else {

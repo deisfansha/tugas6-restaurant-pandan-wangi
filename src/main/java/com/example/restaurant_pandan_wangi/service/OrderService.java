@@ -30,6 +30,8 @@ public class OrderService {
     private TableNumberRepository tableNumberRepository;
     @Autowired
     private DetailOrderService detailOrderService;
+    @Autowired
+    private TableNumberService tableNumberService;
 
     private Order current;
     private String message;
@@ -54,6 +56,11 @@ public class OrderService {
 
         if (!existingEmployee.isPresent() || !existingCustomer.isPresent()){
             message = "Invalid Data";
+            return false;
+        }
+
+        if (!existingEmployee.get().isPosition()){
+            message = "Invalid Position";
             return false;
         }
 
@@ -84,7 +91,7 @@ public class OrderService {
         return orderRepository.findAll();
     }
 
-    public List<Order> getById(Long id){
+    public List<Order> getById(long id){
         Optional<Order> existingOrder = orderRepository.findById(id);
         if (!existingOrder.isPresent()){
             message = "Order Not Found";
@@ -98,6 +105,9 @@ public class OrderService {
         if (!existingOrder.isPresent()){
             message = "Order not found";
             return false;
+        }
+        if (existingOrder.get().getTableNumber() != null){
+            tableNumberService.updateInUse(existingOrder.get().getTableNumber().getId(), false);
         }
 
         detailOrderService.deleteByIdOrder(orderId);

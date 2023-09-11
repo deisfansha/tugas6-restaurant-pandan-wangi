@@ -30,7 +30,8 @@ public class CustomerService {
      * @return                  True jika berhasil ditambahkan, false jika gagal.
      */
     public boolean add(Customer customerRequest) {
-        if (isNameValid(customerRequest.getName()) || isPhoneValid(customerRequest.getPhone())){
+        if (isNameNotValid(customerRequest.getName()) ||
+                (customerRequest.isMember() && isPhoneNotValid(customerRequest.getPhone()))){
             message = "Invalid Input.";
             return false;
         }
@@ -51,16 +52,15 @@ public class CustomerService {
         current = null;
 
         if (!customerOptional.isPresent()) {
-            message = "Customer ID Not Found.";
+            message = "Customer Not Found.";
             return false;
-        } else if (customerRequest.getName() == null || !isNameValid(customerRequest.getName()) || !isPhoneValid(customerRequest.getPhone()) ) {
+        } else if (isNameNotValid(customerRequest.getName()) || isPhoneNotValid(customerRequest.getPhone())) {
             message = "Input invalid.";
             return false;
         } else {
             customerOptional.get().setName(customerRequest.getName());
             customerOptional.get().setPhone(customerRequest.getPhone());
             customerRepository.save(customerOptional.get());
-            message = "Customer with ID `" + id + "` updated successfully.";
             current = customerOptional.get();
             return true;
         }
@@ -77,14 +77,11 @@ public class CustomerService {
         Optional<Customer> customerOptional = customerRepository.findById(id);
 
         if (!customerOptional.isPresent()) {
-            message = "Customer ID Not Found.";
+            message = "Customer Not Found.";
             return false;
         } else {
             customerOptional.get().setMember(isMember);
             customerRepository.save(customerOptional.get());
-            if (isMember) {
-                message = "Success";
-            }
             current = customerOptional.get();
             return true;
         }
@@ -97,7 +94,7 @@ public class CustomerService {
      */
     public List<Customer> customerList() {
         if (customerRepository.count() == 0) seed();
-        return customerRepository.findAll();
+        return customerRepository.findAllCustomers();
     }
 
     /**
@@ -109,10 +106,9 @@ public class CustomerService {
     public Customer getCustomerById(long id) {
         Optional<Customer> customerOptional = customerRepository.findById(id);
         if (customerOptional.isPresent()) {
-            message = "Customer ID Found.";
             return customerOptional.get();
         } else {
-            message = "Customer ID Not Found.";
+            message = "Customer Not Found.";
             return null;
         }
     }
@@ -124,7 +120,7 @@ public class CustomerService {
      * @param name      Nama yang akan diperiksa.
      * @return          True jika nama valid, false jika tidak valid.
      */
-    private boolean isNameValid(String name) {
+    private boolean isNameNotValid(String name) {
         return name == null || !name.matches("[a-zA-Z0-9\\s]+");
     }
 
@@ -135,7 +131,7 @@ public class CustomerService {
      * @param phone_number  Nomor telepon yang akan diperiksa.
      * @return              True jika nomor telepon valid, false jika tidak valid.
      */
-    private boolean isPhoneValid(String phone_number){
+    private boolean isPhoneNotValid(String phone_number){
         return phone_number == null || !phone_number.matches("^[0-9]{8,13}$");
     }
 

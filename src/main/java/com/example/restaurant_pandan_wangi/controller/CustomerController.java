@@ -26,7 +26,7 @@ public class CustomerController {
     public ResponseEntity getCustomers() {
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ApiResponse(
-                        "All list Customer.",
+                        "Success",
                         customerService.customerList()
                 ));
     }
@@ -37,7 +37,7 @@ public class CustomerController {
         if (customerService.getCustomerById(id) != null) {
             return ResponseEntity.status(HttpStatus.OK)
                     .body(new ApiResponse(
-                            customerService.getMessage(),
+                            "Success",
                             customerService.getCustomerById(id)
                     ));
         } else {
@@ -54,7 +54,7 @@ public class CustomerController {
         if (customerService.add(customerRequest)) {
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body(new ApiResponse(
-                            customerService.getMessage(),
+                            "Success",
                             customerRequest
                     ));
         } else {
@@ -71,7 +71,7 @@ public class CustomerController {
         if (customerService.updateData(id, customerRequest)) {
             return ResponseEntity.status(HttpStatus.OK)
                     .body(new ApiResponse(
-                            customerService.getMessage(),
+                            "Success",
                             customerService.getCurrent()
                     ));
         } else {
@@ -88,7 +88,7 @@ public class CustomerController {
         if (customerService.updateIsMember(id,customerRequest.isMember())) {
             return ResponseEntity.status(HttpStatus.OK)
                     .body(new ApiResponse(
-                            customerService.getMessage(),
+                            "Success",
                             customerService.getCurrent()
                     ));
         } else {

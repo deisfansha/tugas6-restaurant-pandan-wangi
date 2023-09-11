@@ -21,6 +21,7 @@ public class MenuController {
     @Autowired
     private MenuService menuService;
 
+    // API untuk menampilkan semua daftar Menu.
     @GetMapping("")
     public ResponseEntity getAllMenu() {
         return ResponseEntity.status(HttpStatus.OK).body(
@@ -30,6 +31,7 @@ public class MenuController {
                 ));
     }
 
+    // API untuk menampilkan daftar Menu berdasarkan status aktif.
     @GetMapping("/actived/{isActive}")
     public ResponseEntity getAllMenuByActive(@PathVariable boolean isActive) {
         return ResponseEntity.status(HttpStatus.OK).body(
@@ -39,6 +41,7 @@ public class MenuController {
                 ));
     }
 
+    // API untuk menampilkan daftar Menu berdasarkan nama.
     @GetMapping("/named/{name}")
     public ResponseEntity getAllMenuByName(@PathVariable String name) {
         return ResponseEntity.status(HttpStatus.OK).body(
@@ -48,6 +51,7 @@ public class MenuController {
                 ));
     }
 
+    // API untuk menampilkan daftar Menu berdasarkan kategori.
     @GetMapping("/category/{category}")
     public ResponseEntity getAllMenuByCategory(@PathVariable boolean category) {
         return ResponseEntity.status(HttpStatus.OK).body(
@@ -57,6 +61,7 @@ public class MenuController {
                 ));
     }
 
+    // API untuk menampilkan informasi Menu berdasarkan ID Menu.
     @GetMapping("/{id}")
     public ResponseEntity getMenuById(@PathVariable long id) {
         if (menuService.getMenuById(id) != null) {
@@ -73,6 +78,7 @@ public class MenuController {
         }
     }
 
+    // API untuk menambahkan Menu baru berdasarkan request.
     @PostMapping("")
     public ResponseEntity addMenu(@RequestBody Menu menuRequest) {
         if (menuService.add(menuRequest)) {
@@ -89,6 +95,7 @@ public class MenuController {
         }
     }
 
+    // API untuk memperbarui informasi Menu berdasarkan ID Menu dan request.
     @PutMapping("/{id}")
     public ResponseEntity updateDate(@PathVariable long id, @RequestBody Menu menuRequest) {
         if (menuService.updateData(id,menuRequest)) {
@@ -105,9 +112,10 @@ public class MenuController {
         }
     }
 
+    // API untuk memperbarui status aktif Menu berdasarkan ID Menu dan request.
     @PatchMapping("/{id}/activated")
     public ResponseEntity updateActivated(@PathVariable long id, @RequestBody Menu menuRequest) {
-        if (menuService.updateStatus(id,menuRequest)) {
+        if (menuService.updateStatus(id,menuRequest.isActive())) {
             return ResponseEntity.status(HttpStatus.OK)
                     .body(new ApiResponse(
                             "Success",

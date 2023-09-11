@@ -32,13 +32,6 @@ public class Order {
         // Do Nothing
     }
 
-    public Order(Date createdAt, Employee employee, TableNumber tableNumber, Customer customer) {
-        this.createdAt = createdAt;
-        this.employee = employee;
-        this.tableNumber = tableNumber;
-        this.customer = customer;
-    }
-
     public long getId() {
         return id;
     }

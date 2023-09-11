@@ -20,12 +20,9 @@ public class Employee {
     private String name;
     @Column(name = "phone_number")
     private String phoneNumber;
-    private boolean position = true;
+    private boolean position = true;    // Posisi karyawan : true -> staff, false -> koki
     @Column(name = "actived")
     private boolean isActive = true;
-    @OneToMany(mappedBy = "employee")
-    @JsonIgnore
-    private List<Order> orderList;
 
     public Employee() {
         // Do Nothing
@@ -83,9 +80,5 @@ public class Employee {
 
     public void setActive(boolean active) {
         isActive = active;
-    }
-
-    public List<Order> getOrderList() {
-        return orderList;
     }
 }

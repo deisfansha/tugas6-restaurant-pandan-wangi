@@ -10,8 +10,8 @@ public class TableNumber {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private boolean isTableInUse = false; // Status meja sedang ditempati atau tidak, true untuk ditempati dan false untuk belum ditempati.
-    private boolean isActive = true;     // Status meja sedang digunakan atau tidak
+    private boolean isTableInUse = false; // true -> sedang dipakai, false -> sedang tersedia.
+    private boolean isActive = true;     // Status meja : true -> meja ada, false -> meja tidak ada
 
     public TableNumber() {
         // Do Nothing

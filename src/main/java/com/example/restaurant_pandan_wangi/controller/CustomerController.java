@@ -21,6 +21,7 @@ public class CustomerController {
     @Autowired
     private CustomerService customerService;
 
+    // API untuk menampilkan semua daftar Customer.
     @GetMapping("")
     public ResponseEntity getCustomers() {
         return ResponseEntity.status(HttpStatus.OK).body(
@@ -30,6 +31,7 @@ public class CustomerController {
                 ));
     }
 
+    // API untuk menampilkan informasi Customer berdasarkan ID Customer.
     @GetMapping("/{id}")
     public ResponseEntity getCustomerById(@PathVariable long id) {
         if (customerService.getCustomerById(id) != null) {
@@ -46,6 +48,7 @@ public class CustomerController {
         }
     }
 
+    // API untuk menambahkan Customer baru berdasarkan request.
     @PostMapping("")
     public ResponseEntity addCustomer(@RequestBody Customer customerRequest) {
         if (customerService.add(customerRequest)) {
@@ -62,6 +65,7 @@ public class CustomerController {
         }
     }
 
+    // API untuk memperbarui informasi Customer berdasarkan ID Customer dan request.
     @PutMapping("/{id}")
     public ResponseEntity updateCustomer(@PathVariable long id, @RequestBody Customer customerRequest) {
         if (customerService.updateData(id, customerRequest)) {
@@ -78,6 +82,7 @@ public class CustomerController {
         }
     }
 
+    // API untuk memperbarui status member berdasarkan ID Customer.
     @PatchMapping("/member/{id}")
     public ResponseEntity updateIsMember(@PathVariable long id, @RequestBody Customer customerRequest) {
         if (customerService.updateIsMember(id,customerRequest.isMember())) {

@@ -23,6 +23,12 @@ public class MenuService {
         return message;
     }
 
+    /**
+     * Menambahkan Menu baru.
+     *
+     * @param menuRequest   Menu yang akan ditambahkan.
+     * @return              True jika berhasil ditambahkan, false jika gagal.
+     */
     public boolean add(Menu menuRequest) {
         if (menuRequest.getName() != null && isNameValid(menuRequest.getName()) &&
                 menuRequest.getPrice() > 0) {
@@ -34,6 +40,13 @@ public class MenuService {
         }
     }
 
+    /**
+     * Memperbarui informasi Menu yang ada berdasarkan ID Menu.
+     *
+     * @param id            ID Menu yang akan diperbarui.
+     * @param menuRequest   Informasi Menu yang ingin diperbarui.
+     * @return              True jika berhasil diperbarui, false jika gagal.
+     */
     public boolean updateData(long id, Menu menuRequest) {
         Optional<Menu> menuOptional = menuRepository.findById(id);
 
@@ -55,37 +68,73 @@ public class MenuService {
         }
     }
 
-    public boolean updateStatus(long id, Menu menuRequest) {
+    /**
+     * Memperbarui status Menu yang ada berdasarkan ID Menu.
+     *
+     * @param id        ID Menu yang akan diperbarui.
+     * @param isActive  Status aktif Menu yang ingin diperbarui.
+     * @return          True jika berhasil diperbarui, false jika gagal.
+     */
+    public boolean updateStatus(long id, boolean isActive) {
         Optional<Menu> menuOptional = menuRepository.findById(id);
 
         if (!menuOptional.isPresent()) {
             message = "Menu Not Found";
             return false;
         } else {
-            menuOptional.get().setActive(menuRequest.isActive());
+            menuOptional.get().setActive(isActive);
             menuRepository.save(menuOptional.get());
             current = menuOptional.get();
             return true;
         }
     }
 
+    /**
+     * Mengembalikan semua daftar Menu.
+     *
+     * @return          Daftar Menu.
+     */
     public List<Menu> getAllMenu() {
         if (menuRepository.count() == 0) seed();
         return menuRepository.findAllMenu();
     }
 
+    /**
+     * Mengembalikan daftar Menu berdasarkan aktif.
+     *
+     * @param isActive  Status aktif pada Menu.
+     * @return          Daftar Menu.
+     */
     public List<Menu> getAllMenuByActive(boolean isActive) {
         return menuRepository.findMenuByActive(isActive);
     }
 
+    /**
+     * Mengembalikan daftar Menu berdasarkan nama.
+     *
+     * @param name  Nama menu yang ingin dicari.
+     * @return      Daftar Menu.
+     */
     public List<Menu> getAllMenuByName(String name) {
         return menuRepository.findMenuByName(name);
     }
 
+    /**
+     * Mengembalikan daftar Menu berdasarkan kategori.
+     *
+     * @param category  Kategori makanan yang ingin dicari.
+     * @return          Daftar Menu.
+     */
     public List<Menu> getAllMenuByCategory(boolean category) {
         return menuRepository.findMenuByCategory(category);
     }
 
+    /**
+     * Mengembalikan Menu berdasarkan ID Menu.
+     *
+     * @param id    ID Menu.
+     * @return      Menu jika tersedia, null jika tidak tersedia.
+     */
     public Menu getMenuById(long id) {
         Optional<Menu> menuOptional = menuRepository.findById(id);
 
@@ -97,6 +146,13 @@ public class MenuService {
         }
     }
 
+    /**
+     * Memeriksa apakah sebuah nama valid.
+     * Nama yang valid hanya mengandung huruf (a-z, A-Z), angka (0-9), dan spasi.
+     *
+     * @param name      Nama yang akan diperiksa.
+     * @return true     Jika nama valid, false jika tidak valid.
+     */
     private boolean isNameValid(String name) {
         return name.matches("[a-zA-Z0-9\\s]+");
     }

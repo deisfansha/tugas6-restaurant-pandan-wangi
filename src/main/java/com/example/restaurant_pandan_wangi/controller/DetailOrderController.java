@@ -21,6 +21,7 @@ public class DetailOrderController {
     @Autowired
     private DetailOrderService detailOrderService;
 
+    // API untuk menampilkan semua daftar DetailOrder.
     @GetMapping("")
     public ResponseEntity getAllDetailOrder() {
         return ResponseEntity.status(HttpStatus.OK).body(
@@ -30,15 +31,17 @@ public class DetailOrderController {
                 ));
     }
 
-    @GetMapping("/order/{id}")
-    public ResponseEntity getAllDetailOrderByIdOrder(@PathVariable long id) {
+    // API untuk menampilkan daftar DetailOrder berdasarkan ID Order
+    @GetMapping("/order/{idOrder}")
+    public ResponseEntity getAllDetailOrderByIdOrder(@PathVariable long idOrder) {
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ApiResponse(
                         "Success",
-                        detailOrderService.getAllDetailOrderByIdOrder(id)
+                        detailOrderService.getAllDetailOrderByIdOrder(idOrder)
                 ));
     }
 
+    // API untuk menampilkan informasi DetailOrder berdasarkan ID DetailOrder.
     @GetMapping("{id}")
     public ResponseEntity getAllDetailOrderById(@PathVariable long id) {
         if (detailOrderService.getDetailOrderById(id) != null) {
@@ -56,6 +59,7 @@ public class DetailOrderController {
 
     }
 
+    // API untuk menambahkan DetailOrder berdasarkan request.
     @PostMapping("")
     public ResponseEntity addDetailOrder(@RequestBody DetailOrder detailOrderRequest) {
         if (detailOrderService.add(detailOrderRequest)) {
@@ -71,7 +75,7 @@ public class DetailOrderController {
                     ));
         }
     }
-
+    // API untuk menghapus transaksi DetailOrder berdasarkan ID DetailOrder.
     @DeleteMapping("/{id}")
     public ResponseEntity deleteDetailOrder(@PathVariable long id) {
         if (detailOrderService.delete(id)) {
@@ -88,8 +92,9 @@ public class DetailOrderController {
         }
     }
 
+    // API untuk memperbarui status orderan berdasarkan ID DetailOrder.
     @PatchMapping("/status/{id}")
-    public ResponseEntity updateActivated(@PathVariable long id, @RequestBody DetailOrder detailOrderRequest) {
+    public ResponseEntity updateStatusOrder(@PathVariable long id, @RequestBody DetailOrder detailOrderRequest) {
         if (detailOrderService.updateStatusOrder(id, detailOrderRequest.getStatusOrder())) {
             return ResponseEntity.status(HttpStatus.OK)
                     .body(new ApiResponse(

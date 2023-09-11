@@ -24,7 +24,7 @@ public class OrderController {
     public ResponseEntity createOrder(@RequestBody Order orderRequest){
         boolean added = orderService.createOrder(orderRequest);
         if (added){
-            return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse(orderService.getMessage(), orderRequest));
+            return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Success", orderRequest));
         }else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(orderService.getMessage()));
         }
@@ -36,7 +36,7 @@ public class OrderController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity getAllById(@PathVariable Long id){
+    public ResponseEntity getAllById(@PathVariable long id){
         if (orderService.getById(id) == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(orderService.getMessage()));
         }else {
@@ -48,7 +48,7 @@ public class OrderController {
     public ResponseEntity deleteOrder(@PathVariable long id){
         boolean deleted = orderService.deleteOrder(id);
         if (deleted){
-            return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse(orderService.getMessage(), orderService.getCurrent()));
+            return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Success", orderService.getCurrent()));
         }else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(orderService.getMessage()));
         }

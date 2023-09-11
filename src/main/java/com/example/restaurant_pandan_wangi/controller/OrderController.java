@@ -31,7 +31,7 @@ public class OrderController {
     }
 
     @GetMapping("")
-    public ResponseEntity getAllPositionEmployee(){
+    public ResponseEntity getAllOrders(){
         return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Success", orderService.getAll()));
     }
 

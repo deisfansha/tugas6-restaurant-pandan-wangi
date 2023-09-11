@@ -66,9 +66,6 @@ public class CustomerService {
         }
     }
 
-<<<<<<< HEAD
-
-=======
     /**
      * Memperbarui status member Customer yang ada berdasarkan ID Customer.
      *
@@ -76,7 +73,6 @@ public class CustomerService {
      * @param isMember  Status member Customer yang ingin diperbarui.
      * @return          True jika berhasil diperbarui, dan false jika gagal.
      */
->>>>>>> alfaro
     public boolean updateIsMember(long id, boolean isMember) {
         Optional<Customer> customerOptional = customerRepository.findById(id);
 

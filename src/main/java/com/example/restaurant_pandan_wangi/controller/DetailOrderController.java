@@ -82,7 +82,7 @@ public class DetailOrderController {
             return ResponseEntity.status(HttpStatus.OK)
                     .body(new ApiResponse(
                             "Success",
-                            detailOrderService.getCurrent()
+                            detailOrderService.getDetailOrderById(id)
                     ));
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -99,7 +99,7 @@ public class DetailOrderController {
             return ResponseEntity.status(HttpStatus.OK)
                     .body(new ApiResponse(
                             "Success",
-                            detailOrderService.getCurrent()
+                            detailOrderService.getDetailOrderById(id)
                     ));
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)

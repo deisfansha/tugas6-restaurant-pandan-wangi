@@ -13,7 +13,7 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String name;
-    private String phone_number;
+    private String phoneNumber;
     private boolean isMember = false;
 
     public Customer() {
@@ -22,7 +22,7 @@ public class Customer {
 
     public Customer(String name, String phone_number, boolean isMember) {
         this.name = name;
-        this.phone_number = phone_number;
+        this.phoneNumber = phone_number;
         this.isMember = isMember;
     }
 
@@ -38,12 +38,12 @@ public class Customer {
         this.name = name.trim();
     }
 
-    public String getPhone() {
-        return phone_number;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhone(String phone_number) {
-        this.phone_number = phone_number.trim();
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber.trim();
     }
 
     public boolean isMember() {

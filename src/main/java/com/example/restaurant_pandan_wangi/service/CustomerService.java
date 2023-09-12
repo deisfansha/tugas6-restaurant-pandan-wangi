@@ -5,6 +5,7 @@ import com.example.restaurant_pandan_wangi.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,7 +32,7 @@ public class CustomerService {
      */
     public boolean add(Customer customerRequest) {
         if (isNameNotValid(customerRequest.getName()) ||
-                (customerRequest.isMember() && isPhoneNotValid(customerRequest.getPhone()))){
+                (customerRequest.isMember() && isPhoneNotValid(customerRequest.getPhoneNumber()))){
             message = "Invalid Input.";
             return false;
         }
@@ -54,12 +55,12 @@ public class CustomerService {
         if (!customerOptional.isPresent()) {
             message = "Customer Not Found.";
             return false;
-        } else if (isNameNotValid(customerRequest.getName()) || isPhoneNotValid(customerRequest.getPhone())) {
+        } else if (isNameNotValid(customerRequest.getName()) || isPhoneNotValid(customerRequest.getPhoneNumber())) {
             message = "Input invalid.";
             return false;
         } else {
             customerOptional.get().setName(customerRequest.getName());
-            customerOptional.get().setPhone(customerRequest.getPhone());
+            customerOptional.get().setPhoneNumber(customerRequest.getPhoneNumber());
             customerRepository.save(customerOptional.get());
             current = customerOptional.get();
             return true;
@@ -135,6 +136,7 @@ public class CustomerService {
         return phone_number == null || !phone_number.matches("^[0-9]{8,13}$");
     }
 
+//    @PostConstruct
     private void seed() {
         customerRepository.save(new Customer("Alice", "085748293829", false));
         customerRepository.save(new Customer("Bob", "0812938437", false));

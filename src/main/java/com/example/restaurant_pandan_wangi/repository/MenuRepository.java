@@ -9,12 +9,8 @@ import java.util.List;
 
 @Repository
 public interface MenuRepository extends JpaRepository<Menu, Long> {
-    @Query("SELECT m FROM Menu m WHERE m.isActive = :isActive ORDER BY m.id")
-    List<Menu> findMenuByActive(boolean isActive);
-    @Query("SELECT m FROM Menu m WHERE LOWER(m.name) LIKE LOWER(CONCAT('%', :name, '%')) ORDER BY m.id")
-    List<Menu> findMenuByName(String name);
-    @Query("SELECT m FROM Menu m WHERE m.category = :category ORDER BY m.id")
-    List<Menu> findMenuByCategory(boolean category);
-    @Query("SELECT m FROM Menu m ORDER BY m.id")
-    List<Menu> findAllMenu();
+    List<Menu> findAllByIsActiveOrderById(Boolean isActive);
+    List<Menu> findAllByNameContainingOrderById(String name);
+    List<Menu> findAllByIsFoodOrderById(Boolean isFood);
+    List<Menu> findAllByOrderById();
 }

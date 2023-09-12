@@ -20,12 +20,7 @@ public class DetailOrderService {
     private MenuRepository menuRepository;
     @Autowired
     private OrderRepository orderRepository;
-    private DetailOrder current;
     private String message;
-
-    public DetailOrder getCurrent() {
-        return current;
-    }
 
     public String getMessage() {
         return message;
@@ -55,7 +50,7 @@ public class DetailOrderService {
         } else if (!orderOptional.isPresent()) {
             message = "Order Not Found";
             return false;
-        } else if (detailOrderRequest.getPrice() <= 0 && detailOrderRequest.getQuantity() <= 0) {
+        } else if (detailOrderRequest.getQuantity() <= 0) {
             message = "Input Invalid";
             return false;
         } else {
@@ -75,14 +70,13 @@ public class DetailOrderService {
      */
     public boolean delete(long id) {
         Optional<DetailOrder> optionalDetailOrder = detailOrderRepository.findById(id);
-        current = null;
 
         if (!optionalDetailOrder.isPresent()) {
             message = "DetailOrder Not Found";
             return false;
         } else {
-            current = optionalDetailOrder.get();
-            detailOrderRepository.delete(optionalDetailOrder.get());
+            optionalDetailOrder.get().delete();
+            detailOrderRepository.save(optionalDetailOrder.get());
             return true;
         }
     }
@@ -98,7 +92,8 @@ public class DetailOrderService {
         if (detailOrdersByIdOrder.size() == 0) {
             message = "DetailOrder Not Found";
         } else {
-            detailOrderRepository.deleteAll(detailOrdersByIdOrder);
+            detailOrdersByIdOrder.forEach(DetailOrder::delete);
+            detailOrderRepository.saveAll(detailOrdersByIdOrder);
         }
     }
 
@@ -111,7 +106,6 @@ public class DetailOrderService {
      */
     public boolean updateStatusOrder(long id, int status) {
         Optional<DetailOrder> optionalDetailOrder = detailOrderRepository.findById(id);
-        current = null;
 
         if (!optionalDetailOrder.isPresent()) {
             message = "DetailOrder Not Found";
@@ -121,7 +115,6 @@ public class DetailOrderService {
             return false;
         } else {
             optionalDetailOrder.get().setStatusOrder(status);
-            current = optionalDetailOrder.get();
             detailOrderRepository.save(optionalDetailOrder.get());
             return true;
         }
@@ -133,7 +126,7 @@ public class DetailOrderService {
      * @return      Daftar DetailOrder.
      */
     public List<DetailOrder> getAllDetailOrder() {
-        return detailOrderRepository.findAllDetailOrder();
+        return detailOrderRepository.findAllByIsDeletedFalseOrderByIdAsc();
     }
 
     /**
@@ -143,7 +136,7 @@ public class DetailOrderService {
      * @return          Daftar DetailOrder.
      */
     public List<DetailOrder> getAllDetailOrderByIdOrder(long idOrder) {
-        return detailOrderRepository.findAllDetailOrderByIdOrder(idOrder);
+        return detailOrderRepository.findAllByOrder_IdAndIsDeletedFalseOrderById(idOrder);
     }
 
     /**
@@ -153,7 +146,7 @@ public class DetailOrderService {
      * @return      DetailOrder jika tersedia, null jika tidak tersedia.
      */
     public DetailOrder getDetailOrderById(long id) {
-        Optional<DetailOrder> detailOrderOptional = detailOrderRepository.findById(id);
+        Optional<DetailOrder> detailOrderOptional = detailOrderRepository.findByIsDeletedFalseAndId(id);
 
         if (detailOrderOptional.isPresent()) {
             return detailOrderOptional.get();

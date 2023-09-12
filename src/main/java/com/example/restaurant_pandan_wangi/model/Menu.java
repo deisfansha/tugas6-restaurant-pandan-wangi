@@ -12,17 +12,17 @@ public class Menu {
     private long id;
     private String name;
     private int price;
-    private boolean category;           // Kategori menu : true -> makanan, false -> minuman
+    private boolean isFood;           // Kategori menu : true -> makanan, false -> minuman
     private boolean isActive = true;    // Status menu tersedia
 
     public Menu() {
         // Do Nothing
     }
 
-    public Menu(String name, int price, boolean category) {
+    public Menu(String name, int price, boolean isFood) {
         this.name = name;
         this.price = price;
-        this.category = category;
+        this.isFood = isFood;
     }
 
     public long getId() {
@@ -45,17 +45,17 @@ public class Menu {
         this.price = price;
     }
 
-    public boolean isCategory() {
-        return category;
+    public boolean isFood() {
+        return isFood;
     }
 
     public String getCategory() {
-        if (category) return "Makanan";
+        if (isFood) return "Makanan";
         else return "Minuman";
     }
 
-    public void setCategory(boolean category) {
-        this.category = category;
+    public void setFood(boolean food) {
+        isFood = food;
     }
 
     public boolean isActive() {

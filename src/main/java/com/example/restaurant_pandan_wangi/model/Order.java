@@ -15,7 +15,7 @@ import java.sql.Date;
 public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     @Column(name = "created_at")
     private Date createdAt;
     @ManyToOne
@@ -27,6 +27,8 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "id_customer", referencedColumnName = "id")
     private Customer customer;
+
+    private Boolean isDelete = true;
 
     public Order() {
         // Do Nothing
@@ -79,6 +81,11 @@ public class Order {
         this.customer = customer;
     }
 
+    public Boolean getDelete() {
+        return isDelete;
+    }
 
-
+    public void setDelete() {
+        isDelete = true;
+    }
 }

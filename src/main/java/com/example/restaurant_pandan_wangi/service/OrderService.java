@@ -104,7 +104,7 @@ public class OrderService {
      * @param id    ID Order.
      * @return      Order jika tersedia, null jika tidak tersedia.
      */
-    public List<Order> getById(long id){
+    public List<Order> getById(Long id){
         Optional<Order> existingOrder = orderRepository.findById(id);
         if (!existingOrder.isPresent()){
             message = "Order Not Found.";
@@ -119,7 +119,7 @@ public class OrderService {
      * @param orderId   ID Order yang akan dihapus.
      * @return          True jika berhasil dihapus, false jika gagal.
      */
-    public boolean deleteOrder(long orderId){
+    public boolean softDeleteOrder(Long orderId){
         Optional<Order> existingOrder = orderRepository.findById(orderId);
         if (!existingOrder.isPresent()){
             message = "Order Not Found.";
@@ -128,8 +128,9 @@ public class OrderService {
             tableNumberService.updateInUse(existingOrder.get().getTableNumber().getId(), false);
         }
 
+        existingOrder.get().setDelete();
         detailOrderService.deleteByIdOrder(orderId);
-        orderRepository.deleteById(orderId);
+        orderRepository.save(existingOrder.get());
         current = existingOrder.get();
         return true;
     }

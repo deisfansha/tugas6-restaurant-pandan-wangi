@@ -10,17 +10,10 @@ import java.util.Optional;
 
 @Repository
 public interface EmployeeRepository extends JpaRepository <Employee, Long> {
-
-    @Query("SELECT e from Employee e where e.isActive = true ORDER BY e.id")
-    List<Employee> findAllNotDeleted();
-
-    @Query("SELECT e from Employee e ORDER BY e.id ASC")
-    List<Employee> findAllSorting();
-    List<Employee> findAllById(long id);
-
-    @Query("SELECT e from Employee e where e.isActive = true and e.position = :position ORDER BY e.id ASC")
-    List<Employee> findAllByPosition(boolean position);
-
-    Optional<Employee> findById(long id);
+    List<Employee> findAllByIsActiveTrueOrderByNameAsc();
+    List<Employee> findAllOrderByNameAsc();
+    List<Employee> findByPosition(Boolean position);
+    Optional<Employee> findById(Long id);
+    List<Employee> findAllById(Long id);
 
 }

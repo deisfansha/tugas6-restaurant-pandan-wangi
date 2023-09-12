@@ -39,7 +39,7 @@ public class OrderController {
 
     // API untuk menampilkan informasi Order berdasarkan ID Order.
     @GetMapping("/{id}")
-    public ResponseEntity getAllById(@PathVariable long id){
+    public ResponseEntity getAllById(@PathVariable Long id){
         if (orderService.getById(id) == null){
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(orderService.getMessage()));
         }else {
@@ -49,8 +49,8 @@ public class OrderController {
 
     // API untuk menghapus Order berdasarkan ID Order.
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteOrder(@PathVariable long id){
-        boolean deleted = orderService.deleteOrder(id);
+    public ResponseEntity softDelete(@PathVariable Long id){
+        boolean deleted = orderService.softDeleteOrder(id);
         if (deleted){
             return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Success", orderService.getCurrent()));
         }else {

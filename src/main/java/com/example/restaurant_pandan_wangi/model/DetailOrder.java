@@ -1,5 +1,7 @@
 package com.example.restaurant_pandan_wangi.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,22 +13,23 @@ import javax.persistence.ManyToOne;
 public class DetailOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     @ManyToOne
     @JoinColumn(name = "id_order", referencedColumnName = "id")
     private Order order;
     @ManyToOne
     @JoinColumn(name = "id_menu", referencedColumnName = "id")
     private Menu menu;
-    private int price;
-    private int quantity;
-    private int statusOrder = 0;    // 0 -> Pending, 1 -> Cooking, 2 -> Deliver, 3 -> Done
+    private Integer price;
+    private Integer quantity;
+    private Integer statusOrder = 0;    // 0 -> Pending, 1 -> Cooking, 2 -> Deliver, 3 -> Done
+    private Boolean isDeleted = false;
 
     public DetailOrder() {
         // Do Nothing
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
@@ -46,19 +49,19 @@ public class DetailOrder {
         this.menu = menu;
     }
 
-    public int getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(Integer price) {
         this.price = price;
     }
 
-    public int getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 
@@ -77,11 +80,20 @@ public class DetailOrder {
         }
     }
 
-    public int getStatusOrder() {
+    public Integer getStatusOrder() {
         return statusOrder;
     }
 
-    public void setStatusOrder(int statusOrder) {
+    public void setStatusOrder(Integer statusOrder) {
         this.statusOrder = statusOrder;
+    }
+
+    @JsonIgnore
+    public Boolean getDeleted() {
+        return isDeleted;
+    }
+
+    public void delete() {
+        isDeleted = true;
     }
 }

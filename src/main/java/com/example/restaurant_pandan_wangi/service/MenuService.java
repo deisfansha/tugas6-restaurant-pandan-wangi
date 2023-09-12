@@ -12,12 +12,7 @@ import java.util.Optional;
 public class MenuService {
     @Autowired
     private MenuRepository menuRepository;
-    private Menu current;   // Untuk mengambil data terbaru saat transaksi
     private String message;
-
-    public Menu getCurrent() {
-        return current;
-    }
 
     public String getMessage() {
         return message;
@@ -61,9 +56,8 @@ public class MenuService {
         } else {
             menuOptional.get().setName(menuRequest.getName());
             menuOptional.get().setPrice(menuRequest.getPrice());
-            menuOptional.get().setCategory(menuRequest.isCategory());
+            menuOptional.get().setFood(menuRequest.isFood());
             menuRepository.save(menuOptional.get());
-            current = menuOptional.get();
             return true;
         }
     }
@@ -84,7 +78,6 @@ public class MenuService {
         } else {
             menuOptional.get().setActive(isActive);
             menuRepository.save(menuOptional.get());
-            current = menuOptional.get();
             return true;
         }
     }
@@ -96,7 +89,7 @@ public class MenuService {
      */
     public List<Menu> getAllMenu() {
         if (menuRepository.count() == 0) seed();
-        return menuRepository.findAllMenu();
+        return menuRepository.findAllByOrderById();
     }
 
     /**
@@ -106,7 +99,7 @@ public class MenuService {
      * @return          Daftar Menu.
      */
     public List<Menu> getAllMenuByActive(boolean isActive) {
-        return menuRepository.findMenuByActive(isActive);
+        return menuRepository.findAllByIsActiveOrderById(isActive);
     }
 
     /**
@@ -116,7 +109,7 @@ public class MenuService {
      * @return      Daftar Menu.
      */
     public List<Menu> getAllMenuByName(String name) {
-        return menuRepository.findMenuByName(name);
+        return menuRepository.findAllByNameContainingOrderById(name);
     }
 
     /**
@@ -125,8 +118,8 @@ public class MenuService {
      * @param category  Kategori makanan yang ingin dicari.
      * @return          Daftar Menu.
      */
-    public List<Menu> getAllMenuByCategory(boolean category) {
-        return menuRepository.findMenuByCategory(category);
+    public List<Menu> getAllMenuByFood(boolean category) {
+        return menuRepository.findAllByIsFoodOrderById(category);
     }
 
     /**

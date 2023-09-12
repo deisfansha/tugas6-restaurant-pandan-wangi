@@ -13,52 +13,46 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/menu")
+@RequestMapping("/menus")
 public class MenuController {
     @Autowired
     private MenuService menuService;
 
-    // API untuk menampilkan semua daftar Menu.
+    // API untuk menampilkan daftar Menu berdasarkan request.
     @GetMapping("")
-    public ResponseEntity getAllMenu() {
-        return ResponseEntity.status(HttpStatus.OK).body(
-                new ApiResponse(
-                        "Success",
-                        menuService.getAllMenu()
-                ));
-    }
-
-    // API untuk menampilkan daftar Menu berdasarkan status aktif.
-    @GetMapping("/actived/{isActive}")
-    public ResponseEntity getAllMenuByActive(@PathVariable boolean isActive) {
-        return ResponseEntity.status(HttpStatus.OK).body(
-                new ApiResponse(
-                        "Success",
-                        menuService.getAllMenuByActive(isActive)
-                ));
-    }
-
-    // API untuk menampilkan daftar Menu berdasarkan nama.
-    @GetMapping("/named/{name}")
-    public ResponseEntity getAllMenuByName(@PathVariable String name) {
-        return ResponseEntity.status(HttpStatus.OK).body(
-                new ApiResponse(
-                        "Success",
-                        menuService.getAllMenuByName(name)
-                ));
-    }
-
-    // API untuk menampilkan daftar Menu berdasarkan kategori.
-    @GetMapping("/category/{category}")
-    public ResponseEntity getAllMenuByCategory(@PathVariable boolean category) {
-        return ResponseEntity.status(HttpStatus.OK).body(
-                new ApiResponse(
-                        "Success",
-                        menuService.getAllMenuByCategory(category)
-                ));
+    public ResponseEntity getAllMenuBy(
+            @RequestParam(required = false) String name,
+            @RequestParam(name = "is_active", required = false) Boolean isActive,
+            @RequestParam(name = "is_chief", required = false) Boolean isChief) {
+        if (name != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new ApiResponse(
+                            "Success",
+                            menuService.getAllMenuByName(name)
+                    ));
+        } else if (isChief != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new ApiResponse(
+                            "Success",
+                            menuService.getAllMenuByFood(isChief)
+                    ));
+        } else if (isActive != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new ApiResponse(
+                            "Success",
+                            menuService.getAllMenuByActive(isActive)
+                    ));
+        } else {
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new ApiResponse(
+                            "Success",
+                            menuService.getAllMenu()
+                    ));
+        }
     }
 
     // API untuk menampilkan informasi Menu berdasarkan ID Menu.
@@ -102,7 +96,7 @@ public class MenuController {
             return ResponseEntity.status(HttpStatus.OK)
                     .body(new ApiResponse(
                             "Success",
-                            menuService.getCurrent()
+                            menuService.getMenuById(id)
                     ));
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -119,7 +113,7 @@ public class MenuController {
             return ResponseEntity.status(HttpStatus.OK)
                     .body(new ApiResponse(
                             "Success",
-                            menuService.getCurrent()
+                            menuService.getMenuById(id)
                     ));
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)

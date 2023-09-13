@@ -5,9 +5,11 @@ import com.example.restaurant_pandan_wangi.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Properties;
 
 @Service
 public class EmployeeService {
@@ -30,6 +32,7 @@ public class EmployeeService {
      * @param employeeRequest   Employee yang akan ditambahkan.
      * @return                  True jika berhasil ditambahkan, dan false jika gagal.
      */
+    @Transactional()
     public boolean create(Employee employeeRequest){
         if (isNameNotValid(employeeRequest.getName()) || isPhoneNumberNotValid(employeeRequest.getPhoneNumber())){
             message = "Invalid Input.";
@@ -55,13 +58,13 @@ public class EmployeeService {
      * @param id    ID Employee.
      * @return      Employee jika tersedia, jika tidak tersedia kembalikan null.
      */
-    public List<Employee> getById(Long id){
+    public Employee getById(Long id){
         Optional<Employee> existingEmployee = employeeRepository.findById(id);
         if (!existingEmployee.isPresent()){
             message = "Employee Not Found.";
             return null;
         }
-        return employeeRepository.findAllById(id);
+        return existingEmployee.get();
     }
 
     /**
@@ -71,7 +74,7 @@ public class EmployeeService {
      */
     public List<Employee> getAll(){
         if (employeeRepository.count() == 0) seed();
-        return employeeRepository.findAllOrderByNameAsc();
+        return employeeRepository.findByOrderByNameAsc();
     }
 
     /**

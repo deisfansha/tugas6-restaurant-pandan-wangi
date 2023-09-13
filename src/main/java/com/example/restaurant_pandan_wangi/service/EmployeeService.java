@@ -29,6 +29,7 @@ public class EmployeeService {
      * @param employeeRequest   Employee yang akan ditambahkan.
      * @return                  True jika berhasil ditambahkan, dan false jika gagal.
      */
+
     public boolean create(Employee employeeRequest){
         if (isNameNotValid(employeeRequest.getName()) || isPhoneNumberNotValid(employeeRequest.getPhoneNumber())){
             message = "Invalid Input.";
@@ -54,13 +55,13 @@ public class EmployeeService {
      * @param id    ID Employee.
      * @return      Employee jika tersedia, jika tidak tersedia kembalikan null.
      */
-    public List<Employee> getById(Long id){
+    public Employee getById(Long id){
         Optional<Employee> existingEmployee = employeeRepository.findById(id);
         if (!existingEmployee.isPresent()){
             message = "Employee Not Found.";
             return null;
         }
-        return employeeRepository.findAllById(id);
+        return existingEmployee.get();
     }
 
     /**
@@ -70,7 +71,7 @@ public class EmployeeService {
      */
     public List<Employee> getAll(){
         if (employeeRepository.count() == 0) seed();
-        return employeeRepository.findAllByOrderByNameAsc();
+        return employeeRepository.findByOrderByNameAsc();
     }
 
     /**

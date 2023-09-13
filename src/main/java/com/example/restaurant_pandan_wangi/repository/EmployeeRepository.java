@@ -9,8 +9,8 @@ import java.util.List;
 @Repository
 public interface EmployeeRepository extends JpaRepository <Employee, Long> {
     List<Employee> findAllByIsActiveTrueOrderByNameAsc();
-    List<Employee> findAllByOrderByNameAsc();
+    List<Employee> findByOrderByNameAsc();
+
     List<Employee> findByPosition(Boolean position);
-    List<Employee> findAllById(Long id);
 
 }

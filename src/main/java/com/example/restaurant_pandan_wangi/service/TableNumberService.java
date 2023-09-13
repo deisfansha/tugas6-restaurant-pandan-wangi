@@ -26,9 +26,10 @@ public class TableNumberService {
     /**
      * Menambahkan Nomor Meja baru.
      */
-    public void add() {
-        current = new TableNumber();
-        tableNumberRepository.save(current);
+    public TableNumber add() {
+        TableNumber tableNumber = new TableNumber();
+        tableNumberRepository.save(tableNumber);
+        return tableNumber;
     }
 
     /**
@@ -45,7 +46,7 @@ public class TableNumberService {
             message = "Table Not Found";
             return false;
         } else {
-            tableNumberOptional.get().setTableInUse(isUsed);
+            tableNumberOptional.get().setAvailable(isUsed);
             tableNumberRepository.save(tableNumberOptional.get());
             current = tableNumberOptional.get();
             return true;
@@ -68,7 +69,7 @@ public class TableNumberService {
         } else {
             tableNumberOptional.get().setActive(isActive);
             if (!isActive) {
-                tableNumberOptional.get().setTableInUse(false);
+                tableNumberOptional.get().setAvailable(false);
             }
             tableNumberRepository.save(tableNumberOptional.get());
             current = tableNumberOptional.get();
@@ -83,7 +84,7 @@ public class TableNumberService {
      */
     public List<TableNumber> getAllTable() {
         if (tableNumberRepository.count() == 0) seed();
-        return tableNumberRepository.findAllTable();
+        return tableNumberRepository.findAllByOrderById();
     }
 
     /**
@@ -93,7 +94,7 @@ public class TableNumberService {
      * @return          Daftar meja.
      */
     public List<TableNumber> getAllTableByInUse(boolean isUsed) {
-        return tableNumberRepository.findAllTableByInUse(isUsed);
+        return tableNumberRepository.findAllByIsAvailableOrderById(isUsed);
     }
 
     /**
@@ -103,7 +104,7 @@ public class TableNumberService {
      * @return          Daftar meja.
      */
     public List<TableNumber> getAllTableByActive(boolean isActive) {
-        return tableNumberRepository.findAllTableByActive(isActive);
+        return tableNumberRepository.findAllByIsActiveOrderById(isActive);
     }
 
     /**

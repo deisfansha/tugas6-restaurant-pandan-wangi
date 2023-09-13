@@ -9,7 +9,7 @@ import java.util.Optional;
 
 @Repository
 public interface DetailOrderRepository extends JpaRepository<DetailOrder, Long> {
-    List<DetailOrder> findAllByIsDeletedFalseOrderByIdAsc();
+    List<DetailOrder> findAllByIsDeletedFalseOrderById();
     List<DetailOrder> findAllByOrder_IdAndIsDeletedFalseOrderById(Long idOrder);
     Optional<DetailOrder> findByIsDeletedFalseAndId(Long id);
 }

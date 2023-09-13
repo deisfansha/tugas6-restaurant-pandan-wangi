@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -20,34 +21,30 @@ public class TableNumberController {
     @Autowired
     private TableNumberService tableNumberService;
 
-    // API untuk menampilkan semua daftar meja.
+    // API untuk menampilkan daftar meja berdasarkan request.
     @GetMapping("")
-    public ResponseEntity getAllTable() {
-        return ResponseEntity.status(HttpStatus.OK).body(
-                new ApiResponse(
-                        "Success",
-                        tableNumberService.getAllTable()
-                ));
-    }
-
-    // API untuk menampilkan daftar meja berdasarkan status tersedia.
-    @GetMapping("/actived/{isActive}")
-    public ResponseEntity getAllTableByActive(@PathVariable boolean isActive) {
-        return ResponseEntity.status(HttpStatus.OK).body(
-                new ApiResponse(
-                        "Success",
-                        tableNumberService.getAllTableByActive(isActive)
-                ));
-    }
-
-    // API untuk menampilkan daftar meja berdasarkan status digunakan.
-    @GetMapping("/in-used/{isUsed}")
-    public ResponseEntity getAllTableByUse(@PathVariable boolean isUsed) {
-        return ResponseEntity.status(HttpStatus.OK).body(
-                new ApiResponse(
-                        "Success",
-                        tableNumberService.getAllTableByInUse(isUsed)
-                ));
+    public ResponseEntity getAllTable(
+            @RequestParam(name = "is_active", required = false) Boolean isActive,
+            @RequestParam(name = "is_available", required = false) Boolean isAvailable) {
+        if (isAvailable != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new ApiResponse(
+                            "Success",
+                            tableNumberService.getAllTableByInUse(isAvailable)
+                    ));
+        } else if (isActive != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new ApiResponse(
+                            "Success",
+                            tableNumberService.getAllTableByActive(isActive)
+                    ));
+        } else {
+            return ResponseEntity.status(HttpStatus.OK).body(
+                    new ApiResponse(
+                            "Success",
+                            tableNumberService.getAllTable()
+                    ));
+        }
     }
 
     // API untuk menampilkan informasi meja berdasarkan ID Meja.
@@ -71,11 +68,10 @@ public class TableNumberController {
     // API untuk menambahkan meja baru.
     @PostMapping("")
     public ResponseEntity addTable() {
-        tableNumberService.add();
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(new ApiResponse(
                         "Success",
-                        tableNumberService.getCurrent()
+                        tableNumberService.add()
                 ));
     }
 
@@ -86,7 +82,7 @@ public class TableNumberController {
             return ResponseEntity.status(HttpStatus.OK)
                     .body(new ApiResponse(
                             "Success",
-                            tableNumberService.getCurrent()
+                            tableNumberService.getTableById(id)
                     ));
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -99,11 +95,11 @@ public class TableNumberController {
     // API untuk memperbarui status penggunaan meja berdasarakan ID Meja dan request.
     @PatchMapping("/in-used/{id}")
     public ResponseEntity updateInUsed(@PathVariable long id, @RequestBody TableNumber tableNumberRequest) {
-        if (tableNumberService.updateInUse(id,tableNumberRequest.isTableInUse())) {
+        if (tableNumberService.updateInUse(id,tableNumberRequest.isAvailable())) {
             return ResponseEntity.status(HttpStatus.OK)
                     .body(new ApiResponse(
                             "Success",
-                            tableNumberService.getCurrent()
+                            tableNumberService.getTableById(id)
                     ));
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)

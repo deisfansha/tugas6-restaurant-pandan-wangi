@@ -126,7 +126,7 @@ public class DetailOrderService {
      * @return      Daftar DetailOrder.
      */
     public List<DetailOrder> getAllDetailOrder() {
-        return detailOrderRepository.findAllByIsDeletedFalseOrderByIdAsc();
+        return detailOrderRepository.findAllByIsDeletedFalseOrderById();
     }
 
     /**

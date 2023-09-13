@@ -69,8 +69,8 @@ public class OrderService {
             return false;
         } else if (orderRequest.getTableNumber() != null){
             Optional<TableNumber> tableNotUse = tableNumberRepository.findById(orderRequest.getTableNumber().getId());
-            if (tableNotUse.isPresent() && !tableNotUse.get().isTableInUse()){
-                tableNotUse.get().setTableInUse(true);
+            if (tableNotUse.isPresent() && !tableNotUse.get().isAvailable()){
+                tableNotUse.get().setAvailable(true);
                 orderRequest.setTableNumber(tableNotUse.get());
                 tableNumberRepository.save(tableNotUse.get());
             }else {

@@ -10,8 +10,8 @@ public class TableNumber {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    private boolean isTableInUse = false; // true -> sedang dipakai, false -> sedang tersedia.
-    private boolean isActive = true;     // Status meja : true -> meja ada, false -> meja tidak ada
+    private boolean isAvailable = true; // true -> meja sedang tersedia, false -> meja sedang tidak tersedia.
+    private boolean isActive = true;    // Status meja : true -> meja ada, false -> meja tidak ada
 
     public TableNumber() {
         // Do Nothing
@@ -21,12 +21,12 @@ public class TableNumber {
         return id;
     }
 
-    public boolean isTableInUse() {
-        return isTableInUse;
+    public boolean isAvailable() {
+        return isAvailable;
     }
 
-    public void setTableInUse(boolean tableInUse) {
-        this.isTableInUse = tableInUse;
+    public void setAvailable(boolean available) {
+        this.isAvailable = available;
     }
 
     public boolean isActive() {

@@ -45,26 +45,32 @@ public class OrderService {
      * @return              True jika berhasil ditambahkan, false jika gagal.
      */
     public boolean createOrder(Order orderRequest){
-        if (orderRequest.getCustomer() == null || orderRequest.getEmployee() == null){
+        if (orderRequest.getEmployee() == null){
             message = "Invalid Input.";
             return false;
         }
 
         Optional<Employee> existingEmployee = employeeRepository.findById(orderRequest.getEmployee().getId());
-        Optional<Customer> existingCustomer = customerRepository.findById(orderRequest.getCustomer().getId());
+
+        if (orderRequest.getCustomer() != null){
+            Optional<Customer> existingCustomer = customerRepository.findById(orderRequest.getCustomer().getId());
+            if (!existingCustomer.isPresent()) {
+                message = "Customer Not Found.";
+                return false;
+            }else {
+                orderRequest.setCustomer(existingCustomer.get());
+            }
+        }
 
         if (!existingEmployee.isPresent()){
             message = "Employee Not Found.";
             return false;
-        } else if (!existingCustomer.isPresent()) {
-            message = "Customer Not Found.";
-            return false;
-        } else if (!existingEmployee.get().isPosition()){
+        }  else if (!existingEmployee.get().isPosition()){
             message = "Invalid Position To Create Order";
             return false;
         } else if (orderRequest.getTableNumber() != null){
             Optional<TableNumber> tableNotUse = tableNumberRepository.findById(orderRequest.getTableNumber().getId());
-            if (tableNotUse.isPresent() && !tableNotUse.get().isAvailable()){
+            if (tableNotUse.isPresent() && tableNotUse.get().isAvailable()){
                 tableNotUse.get().setAvailable(true);
                 orderRequest.setTableNumber(tableNotUse.get());
                 tableNumberRepository.save(tableNotUse.get());
@@ -77,7 +83,6 @@ public class OrderService {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         String created = format.format(new Timestamp(System.currentTimeMillis()));
 
-        orderRequest.setCustomer(existingCustomer.get());
         orderRequest.setEmployee(existingEmployee.get());
         orderRequest.setCreatedAt(Date.valueOf(created));
         orderRepository.save(orderRequest);

@@ -9,6 +9,5 @@ import java.util.List;
 
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
-    @Query("SELECT c FROM Customer c ORDER BY c.id")
-    List<Customer> findAllCustomers();
+    List<Customer> findAllByOrderByName();
 }

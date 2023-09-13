@@ -89,7 +89,7 @@ public class MenuService {
      */
     public List<Menu> getAllMenu() {
         if (menuRepository.count() == 0) seed();
-        return menuRepository.findAllByOrderById();
+        return menuRepository.findAllByOrderByNameAsc();
     }
 
     /**
@@ -99,7 +99,7 @@ public class MenuService {
      * @return          Daftar Menu.
      */
     public List<Menu> getAllMenuByActive(boolean isActive) {
-        return menuRepository.findAllByIsActiveOrderById(isActive);
+        return menuRepository.findAllByIsActiveOrderByNameAsc(isActive);
     }
 
     /**
@@ -109,7 +109,7 @@ public class MenuService {
      * @return      Daftar Menu.
      */
     public List<Menu> getAllMenuByName(String name) {
-        return menuRepository.findAllByNameContainingOrderById(name);
+        return menuRepository.findAllByNameContainingOrderByNameAsc(name);
     }
 
     /**
@@ -119,7 +119,7 @@ public class MenuService {
      * @return          Daftar Menu.
      */
     public List<Menu> getAllMenuByFood(boolean category) {
-        return menuRepository.findAllByIsFoodOrderById(category);
+        return menuRepository.findAllByIsFoodOrderByNameAsc(category);
     }
 
     /**

@@ -5,7 +5,6 @@ import com.example.restaurant_pandan_wangi.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -71,7 +70,7 @@ public class EmployeeService {
      */
     public List<Employee> getAll(){
         if (employeeRepository.count() == 0) seed();
-        return employeeRepository.findAllOrderByNameAsc();
+        return employeeRepository.findAllByOrderByNameAsc();
     }
 
     /**

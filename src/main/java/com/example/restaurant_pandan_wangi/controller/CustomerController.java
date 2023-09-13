@@ -72,7 +72,7 @@ public class CustomerController {
             return ResponseEntity.status(HttpStatus.OK)
                     .body(new ApiResponse(
                             "Success",
-                            customerService.getCurrent()
+                            customerService.getCustomerById(id)
                     ));
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -89,7 +89,7 @@ public class CustomerController {
             return ResponseEntity.status(HttpStatus.OK)
                     .body(new ApiResponse(
                             "Success",
-                            customerService.getCurrent()
+                            customerService.getCustomerById(id)
                     ));
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)

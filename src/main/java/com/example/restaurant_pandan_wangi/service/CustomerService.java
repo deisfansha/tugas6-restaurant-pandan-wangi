@@ -5,7 +5,6 @@ import com.example.restaurant_pandan_wangi.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,15 +12,10 @@ import java.util.Optional;
 public class CustomerService {
     @Autowired
     private CustomerRepository customerRepository;
-    private Customer current;
     private String message;
 
     public String getMessage() {
         return message;
-    }
-
-    public Customer getCurrent() {
-        return current;
     }
 
     /**
@@ -50,7 +44,6 @@ public class CustomerService {
      */
     public boolean updateData(Long id, Customer customerRequest) {
         Optional<Customer> customerOptional = customerRepository.findById(id);
-        current = null;
 
         if (!customerOptional.isPresent()) {
             message = "Customer Not Found.";
@@ -62,7 +55,6 @@ public class CustomerService {
             customerOptional.get().setName(customerRequest.getName());
             customerOptional.get().setPhoneNumber(customerRequest.getPhoneNumber());
             customerRepository.save(customerOptional.get());
-            current = customerOptional.get();
             return true;
         }
     }
@@ -83,7 +75,6 @@ public class CustomerService {
         } else {
             customerOptional.get().setMember(isMember);
             customerRepository.save(customerOptional.get());
-            current = customerOptional.get();
             return true;
         }
     }
@@ -95,7 +86,7 @@ public class CustomerService {
      */
     public List<Customer> customerList() {
         if (customerRepository.count() == 0) seed();
-        return customerRepository.findAllCustomers();
+        return customerRepository.findAllByOrderByName();
     }
 
     /**

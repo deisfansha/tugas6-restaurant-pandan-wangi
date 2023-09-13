@@ -12,15 +12,10 @@ import java.util.Optional;
 public class EmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
-    private Employee current;
     private String message;
 
     public String getMessage(){
         return message;
-    }
-
-    public Employee getCurrent(){
-        return current;
     }
 
     /**
@@ -104,7 +99,6 @@ public class EmployeeService {
         existingEmployee.get().setPhoneNumber(employeeRequest.getPhoneNumber());
         existingEmployee.get().setPosition(employeeRequest.isPosition());
         employeeRepository.save(existingEmployee.get());
-        current = existingEmployee.get();
         return true;
     }
 
@@ -125,7 +119,6 @@ public class EmployeeService {
 
         existingEmployee.get().setActive(employeeRequest.isActive());
         employeeRepository.save(existingEmployee.get());
-        current = existingEmployee.get();
         return true;
     }
 

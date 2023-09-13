@@ -65,7 +65,7 @@ public class EmployeeController {
     public ResponseEntity updatedEmployee(@PathVariable long id, @RequestBody Employee employeeRequest){
         boolean updated = employeeService.update(id,employeeRequest);
         if (updated){
-            return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Success", employeeService.getCurrent()));
+            return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Success", employeeService.getById(id)));
         }else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(employeeService.getMessage()));
         }
@@ -76,7 +76,7 @@ public class EmployeeController {
     public ResponseEntity updatedActiveEmployee(@PathVariable long id, @RequestBody Employee employeeRequest){
         boolean updated = employeeService.updateActivated(id,employeeRequest);
         if (updated){
-            return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Success", employeeService.getCurrent()));
+            return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Success", employeeService.getById(id)));
         }else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(employeeService.getMessage()));
         }

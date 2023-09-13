@@ -32,15 +32,10 @@ public class OrderService {
     private DetailOrderService detailOrderService;
     @Autowired
     private TableNumberService tableNumberService;
-    private Order current;
     private String message;
 
     public String getMessage(){
         return message;
-    }
-
-    public Order getCurrent(){
-        return current;
     }
 
     /**
@@ -131,7 +126,6 @@ public class OrderService {
         existingOrder.get().setDelete();
         detailOrderService.deleteByIdOrder(orderId);
         orderRepository.save(existingOrder.get());
-        current = existingOrder.get();
         return true;
     }
 }

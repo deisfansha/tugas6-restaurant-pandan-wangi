@@ -52,7 +52,7 @@ public class OrderController {
     public ResponseEntity softDelete(@PathVariable Long id){
         boolean deleted = orderService.softDeleteOrder(id);
         if (deleted){
-            return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Success", orderService.getCurrent()));
+            return ResponseEntity.status(HttpStatus.OK).body(new ApiResponse("Success", orderService.getById(id)));
         }else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(orderService.getMessage()));
         }

@@ -12,12 +12,7 @@ import java.util.Optional;
 public class TableNumberService {
     @Autowired
     private TableNumberRepository tableNumberRepository;
-    private TableNumber current;
     private String message;
-
-    public TableNumber getCurrent() {
-        return current;
-    }
 
     public String getMessage() {
         return message;
@@ -48,7 +43,6 @@ public class TableNumberService {
         } else {
             tableNumberOptional.get().setAvailable(isUsed);
             tableNumberRepository.save(tableNumberOptional.get());
-            current = tableNumberOptional.get();
             return true;
         }
     }
@@ -72,7 +66,6 @@ public class TableNumberService {
                 tableNumberOptional.get().setAvailable(false);
             }
             tableNumberRepository.save(tableNumberOptional.get());
-            current = tableNumberOptional.get();
             return true;
         }
     }
